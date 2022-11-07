@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import UsersListPage from "./pages/UsersListPage";
+import EditUserPage from "./pages/EditUserPage";
+import CreateUserPage from "./pages/CreateUserPage";
+import AssignPermissionsPage from "./pages/AssignPermissionsPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<UsersListPage />}/>
+                <Route path="/edit-user" element={<EditUserPage />}/>
+                <Route path="/create-user" element={<CreateUserPage />}/>
+                <Route path="/assign-permissions" element={<AssignPermissionsPage />}/>
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

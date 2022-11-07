@@ -1,0 +1,1 @@
+export const USERS_FETCH_ERROR = "Error fetching users data";
