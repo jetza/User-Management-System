@@ -6,17 +6,17 @@ export const getAllUsers = () => {
     return async (dispatch) => {
         const fetchUserData = async () => {
             const response = await fetch(`${API_BASE_URL}Users`, {
-                credentials: "include",
+                // credentials: "include",
                 //mode: "no-cors",
                 method: 'GET',
-                headers: {
-                    'Content-type' : 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Credentials': '*',
-                    'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
-                    'Access-Control-Allow-Headers': 'Origin, Content-Type, Authorization'
-
-                }
+                 //headers: {
+                //     'Content-type' : 'application/json',
+                  //   'Access-Control-Allow-Origin': '*',
+                //     'Access-Control-Allow-Credentials': '*',
+                //     'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
+                 //    'Access-Control-Allow-Headers': 'Origin, Content-Type, Authorization'
+                //
+                // }
             });
             console.log(response)
             if (!response.ok) {
