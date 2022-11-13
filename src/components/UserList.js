@@ -1,15 +1,18 @@
 import React, {useEffect} from 'react';
 import DeleteModal from "./DeleteModal";
 import {useNavigate} from "react-router-dom";
-import {getAllUsers} from "../store/usersData/userRequestActions";
-import {useDispatch} from "react-redux";
+import {getUsersData} from "../store/usersData/userRequestActions";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const UserList = () => {
+
+    const {usersData} = useSelector( state => state.usersData);
     const dispatch = useDispatch();
+    console.log(usersData)
 
     useEffect(() => {
-        dispatch(getAllUsers());
+        dispatch(getUsersData());
     }, [dispatch]);
 
     let navigate = useNavigate();
@@ -21,6 +24,8 @@ const UserList = () => {
     function assignPermissionNavigate() {
         navigate("../assign-permissions");
     }
+    //const userNames = usersData.map(({ userName }) => userName);
+    //console.log(userNames);
 
     return (
                     <div className="p-4 bg-gray-50">
@@ -43,9 +48,11 @@ const UserList = () => {
                                                 <span>DELETE</span>
                                             </div>
                                         </div>
+
+
                                         <div className="flex grid grid-cols-8 text-sm text-indigo-700 text-xl font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
                                             <div >
-                                                <span>jelena</span>
+                                                username
                                             </div>
                                             <div>
                                                 <button
@@ -69,6 +76,8 @@ const UserList = () => {
                                                 <DeleteModal />
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>

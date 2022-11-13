@@ -4,8 +4,10 @@ import UsersListPage from "./pages/UsersListPage";
 import EditUserPage from "./pages/EditUserPage";
 import CreateUserPage from "./pages/CreateUserPage";
 import AssignPermissionsPage from "./pages/AssignPermissionsPage";
+//import Spinner from "./components/Spinner";
 
 function App() {
+
     return (
         <Router>
             <Routes>
