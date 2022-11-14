@@ -1,9 +1,12 @@
 import React from 'react';
+import CreateUser from "../components/CreateUser";
+import NavHeader from "../components/NavHeader";
 
 const CreateUserPage = () => {
     return (
         <div>
-            <CreateUserPage />
+            <NavHeader />
+            <CreateUser />
         </div>
     );
 };

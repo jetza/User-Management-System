@@ -10,30 +10,17 @@ export const getUsersData = () => {
             const response = await fetch(`${API_BASE_URL}Users`, {
                 method: 'GET'
             });
-            //console.log(response)
             if (!response.ok) {
                 throw new Error(`${USERS_FETCH_ERROR}`);
-            };
+            }
             const usersData = await response.json();
-            // const newUsersData = usersData.map((data) => {
-            //     return {
-            //         id: data.id,
-            //         firstName: data.firstName,
-            //         lastName: data.lastName,
-            //         userName: data.userName,
-            //         password: data.password,
-            //         email: data.email,
-            //         status: data.status,
-            //         permissions: data.permissions
-            //     };
-            // })
-            dispatch(usersDataActions.setUsersData(usersData));
-            return usersData;
+            const userNames = usersData.map(({ userName }) => userName);
+            dispatch(usersDataActions.setUserName(userNames));
         };
         try {
             await fetchUsersData();
         } catch (e) {
             console.log(e);
-        };
+        }
     };
 };

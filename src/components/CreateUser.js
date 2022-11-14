@@ -1,13 +1,37 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
 const CreateUser = () => {
+
+    function saveHandler() {
+        alert("You saved me!")
+    }
+    let navigate = useNavigate();
+
+    function homeNavigate() {
+        navigate(-1);
+    }
+
     return (
         <div className="p-4 bg-gray-50">
-            <div className="bg-white p-4 rounded-md">
-                <h1 className="text-3xl font-semibold text-indigo-700">
-                    Edit User
-                </h1>
-                <form className="mt-6">
+            <div className="bg-white p-1 rounded-md">
+                <div className="flex items-center space-x-2 items-baseline ml-4">
+                    <button
+                        className="text-violet-700 font-bold justify-center pb-3 mr-3"
+                        type="button"
+                        onClick={homeNavigate}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+
+                    </button>
+                    <h1 className="text-3xl font-semibold text-indigo-700 ml-10">
+                        Create User
+                    </h1>
+                </div>
+
+                <form className="mt-6 ml-4">
                     <div className="mb-2">
                         <label
                             htmlFor="email"
@@ -82,7 +106,8 @@ const CreateUser = () => {
                     </div>
                     <div className="mt-6">
                         <button
-                            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
+                            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+                            onClick={saveHandler}>
                             Save
                         </button>
                     </div>
@@ -91,5 +116,6 @@ const CreateUser = () => {
         </div>
     );
 };
+
 
 export default CreateUser;
