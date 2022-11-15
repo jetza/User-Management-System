@@ -1,11 +1,27 @@
 import React from 'react';
+import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 const EditUser = () => {
 
     let navigate = useNavigate();
+    const state = useSelector( state => state.usersData);
+
     const queryParams = new URLSearchParams(window.location.search);
+    const userParamId = parseInt(queryParams.get(`id`));
+    const userIdObject = state.usersData.find(r => r.id === userParamId);
+
+    const textUser = [ "Edit User", "Create User" ];
     const id = queryParams.get(`id`);
+
+    const usersDataLabels =  [
+            {key: "First Name", value: userIdObject.firstName},
+            {key: "Last Name", value: userIdObject.lastName},
+            {key: "User Name", value: userIdObject.userName},
+            {key: "Password", value: userIdObject.password},
+            {key: "Email", value: userIdObject.email},
+            {key: "Status", value: userIdObject.status.toString()},
+        ]
 
     function homeNavigate() {
         navigate(-1);
@@ -15,6 +31,7 @@ const EditUser = () => {
     }
 
     return (
+
         <div className="p-4 bg-gray-50">
              <div className="bg-white p-1 rounded-md">
                  <div className="flex items-center space-x-2 items-baseline ml-4">
@@ -28,84 +45,33 @@ const EditUser = () => {
                          </svg>
 
                      </button>
-                     <h1 className="text-3xl font-semibold text-indigo-700 ml-10">
-                     Edit User
-                 </h1>
+                     {id != null?
+                         <h1 className="text-3xl font-semi-bold text-indigo-700 ml-10">
+                             {textUser[0]}
+                         </h1>
+                         :<h1 className="text-3xl font-semi-bold text-indigo-700 ml-10">
+                             {textUser[1]}
+                         </h1>
+                     }
                  </div>
 
                 <form className="mt-6 ml-4">
-                    <div className="mb-2">
-                        <label
-                            htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Firstname
-                        </label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label
-                            htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Lastname
-                        </label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label
-                            htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Username
-                        </label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label
-                            htmlFor="password"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label
-                            htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label
-                            htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Status
-                        </label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
+                    {(id != null)?
+                        (usersDataLabels && usersDataLabels.map((key) => {
+                    return <div className="mb-2">
+                                <label
+                                    htmlFor="email"
+                                    className="block text-sm font-semi-bold text-gray-800"
+                                >
+                                {key.key}
+                                </label>
+                                <input
+                                    type="text"
+                                    value={key.value}
+                                    className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                />
+                            </div>
+                    })):(<div>ddd</div>)}
                     <div className="mt-6">
                         <button
                             className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"

@@ -13,7 +13,7 @@ const UserList = () => {
     function editUserNavigate(id) {
         navigate(`../edit-user?id=` + id);
     }
-
+    
     useEffect(() => {
         dispatch(getUsersData());
     }, [dispatch]);
