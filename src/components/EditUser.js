@@ -3,13 +3,15 @@ import {useNavigate} from "react-router-dom";
 
 const EditUser = () => {
 
-    function saveHandler() {
-        alert("You saved me!")
-    }
     let navigate = useNavigate();
+    const queryParams = new URLSearchParams(window.location.search);
+    const id = queryParams.get(`id`);
 
     function homeNavigate() {
         navigate(-1);
+    }
+    function saveHandler() {
+        alert("You saved me!")
     }
 
     return (

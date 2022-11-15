@@ -10,15 +10,14 @@ const UserList = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
+    function editUserNavigate(id) {
+        navigate(`../edit-user?id=` + id);
+    }
 
     useEffect(() => {
         dispatch(getUsersData());
     }, [dispatch]);
 
-    function editUserNavigate(id) {
-        navigate("../edit-user");
-        return id;
-    }
     function assignPermissionNavigate() {
         navigate("../assign-permissions");
     }
@@ -43,7 +42,7 @@ const UserList = () => {
                                                     <button
                                                         className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                         type="button"
-                                                        onClick={editUserNavigate(user.id)}
+                                                        onClick={() => editUserNavigate(user.id)}
                                                     >
                                                         Edit
                                                     </button>
