@@ -3,6 +3,11 @@ import {useNavigate} from "react-router-dom";
 import {getUsersData} from "../store/usersData/userRequestActions";
 import {useDispatch, useSelector} from "react-redux";
 import DeleteModal from "./DeleteModal";
+import {pinkButtonClasses} from "../constants/cssClasses.js"
+import {userNameText,
+        editText,
+        assignText,
+} from "../constants/texts.js";
 
 const UserList = () => {
 
@@ -13,7 +18,7 @@ const UserList = () => {
     function editUserNavigate(id) {
         navigate(`../edit-user?id=` + id);
     }
-    
+
     useEffect(() => {
         dispatch(getUsersData());
     }, [dispatch]);
@@ -30,7 +35,7 @@ const UserList = () => {
                                     <div>
                                         <div className="flex grid grid-cols-8 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
                                             <div>
-                                                <span>Username</span>
+                                                <span>{userNameText}</span>
                                             </div>
                                         </div>
                                         {state.usersData && state.usersData.map((user) => {
@@ -40,20 +45,20 @@ const UserList = () => {
                                                 </div>
                                                 <div>
                                                     <button
-                                                        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        className={pinkButtonClasses}
                                                         type="button"
                                                         onClick={() => editUserNavigate(user.id)}
                                                     >
-                                                        Edit
+                                                        {editText}
                                                     </button>
                                                 </div>
                                                 <div>
                                                     <button
-                                                        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        className={pinkButtonClasses}
                                                         type="button"
                                                         onClick={assignPermissionNavigate}
                                                     >
-                                                        Assign
+                                                        {assignText}
                                                     </button>
                                                 </div>
                                                 <div>

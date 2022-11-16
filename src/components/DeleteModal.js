@@ -1,11 +1,17 @@
 import React from 'react';
+import {pinkButtonClasses} from "../constants/cssClasses.js"
+import {deleteUserText,
+        questionDeleteUserText,
+        discardText,
+        deleteText
+} from "../constants/texts"
 
 const DeleteModal = () => {
     const [showModal, setShowModal] = React.useState(false);
     return (
         <>
             <button
-                className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                className={pinkButtonClasses}
                 type="button"
                 onClick={() => setShowModal(true)}
             >
@@ -22,7 +28,7 @@ const DeleteModal = () => {
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                     <h3 className="text-3xl font-semibold">
-                                        Delete User
+                                        {deleteUserText}
                                     </h3>
                                     <button
                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -36,7 +42,7 @@ const DeleteModal = () => {
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
                                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                                        Are you sure you want to delete this user?
+                                        {questionDeleteUserText}
                                     </p>
                                 </div>
                                 {/*footer*/}
@@ -46,14 +52,14 @@ const DeleteModal = () => {
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        Discard
+                                        {discardText}
                                     </button>
                                     <button
                                         className="bg-indigo-700 text-white active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        Delete
+                                        {deleteText}
                                     </button>
                                 </div>
                             </div>

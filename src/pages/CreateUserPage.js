@@ -1,13 +1,12 @@
 import React from 'react';
-//import CreateUser from "../components/CreateUser";
-import EditUser from "../components/EditUser.js"
+import CreateUser from "../components/CreateUser.js";
 import NavHeader from "../components/NavHeader";
 
 const CreateUserPage = () => {
     return (
         <div>
             <NavHeader />
-            <EditUser />
+            <CreateUser />
         </div>
     );
 };

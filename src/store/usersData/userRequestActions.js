@@ -1,5 +1,5 @@
 import {API_BASE_URL} from "../../constants/apiUrls";
-import {USERS_FETCH_ERROR} from "../../constants/messages";
+import {USERS_FETCH_ERROR} from "../../constants/apiMessages";
 import {usersDataActions} from "./index";
 
 

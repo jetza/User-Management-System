@@ -1,5 +1,16 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
+import {inputClasses, saveFormButtonClasses} from "../constants/cssClasses.js";
+import {createUserText,
+        firstNameText,
+        lastNameText,
+        userNameText,
+        passwordText,
+        emailText,
+        statusText,
+        saveText
+} from "../constants/texts.js";
+
 
 const CreateUser = () => {
 
@@ -27,21 +38,20 @@ const CreateUser = () => {
 
                     </button>
                     <h1 className="text-3xl font-semibold text-indigo-700 ml-10">
-                        Create User
+                        {createUserText}
                     </h1>
                 </div>
-
-                <form className="mt-6 ml-4">
+                <form className="mt-6 ml-4 w-80">
                     <div className="mb-2">
                         <label
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            Firstname
+                            {firstNameText}
                         </label>
                         <input
                             type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            className={inputClasses}
                         />
                     </div>
                     <div className="mb-2">
@@ -49,11 +59,11 @@ const CreateUser = () => {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            Lastname
+                            {lastNameText}
                         </label>
                         <input
                             type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            className={inputClasses}
                         />
                     </div>
                     <div className="mb-2">
@@ -61,11 +71,11 @@ const CreateUser = () => {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            Username
+                            {userNameText}
                         </label>
                         <input
                             type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            className={inputClasses}
                         />
                     </div>
                     <div className="mb-2">
@@ -73,11 +83,11 @@ const CreateUser = () => {
                             htmlFor="password"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            Password
+                            {passwordText}
                         </label>
                         <input
                             type="password"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            className={inputClasses}
                         />
                     </div>
                     <div className="mb-2">
@@ -85,11 +95,11 @@ const CreateUser = () => {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            Email
+                            {emailText}
                         </label>
                         <input
                             type="email"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            className={inputClasses}
                         />
                     </div>
                     <div className="mb-2">
@@ -97,18 +107,18 @@ const CreateUser = () => {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            Status
+                            {statusText}
                         </label>
                         <input
                             type="text"
-                            className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            className={inputClasses}
                         />
                     </div>
                     <div className="mt-6">
                         <button
-                            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+                            className={saveFormButtonClasses}
                             onClick={saveHandler}>
-                            Save
+                            {saveText}
                         </button>
                     </div>
                 </form>

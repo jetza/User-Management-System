@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {inputClasses, saveFormButtonClasses} from "../constants/cssClasses.js";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {editUserText,
+        firstNameText,
+        lastNameText,
+        emailText,
+        statusText,
+        saveText
+} from "../constants/texts.js";
 
 const EditUser = () => {
 
@@ -10,18 +18,12 @@ const EditUser = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
+    const displayStatus = userIdObject.status.toString()? "Active": "Not Active";
 
-    const textUser = [ "Edit User", "Create User" ];
-    const id = queryParams.get(`id`);
-
-    const usersDataLabels =  [
-            {key: "First Name", value: userIdObject.firstName},
-            {key: "Last Name", value: userIdObject.lastName},
-            {key: "User Name", value: userIdObject.userName},
-            {key: "Password", value: userIdObject.password},
-            {key: "Email", value: userIdObject.email},
-            {key: "Status", value: userIdObject.status.toString()},
-        ]
+    const [firstName, setFirstName] = useState(userIdObject.firstName);
+    const [lastName, setLastName] = useState(userIdObject.lastName);
+    const [email, setEmail] = useState(userIdObject.email);
+    const [status, setStatus] = useState(displayStatus);
 
     function homeNavigate() {
         navigate(-1);
@@ -43,43 +45,76 @@ const EditUser = () => {
                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                          </svg>
-
                      </button>
-                     {id != null?
                          <h1 className="text-3xl font-semi-bold text-indigo-700 ml-10">
-                             {textUser[0]}
+                             {editUserText}
                          </h1>
-                         :<h1 className="text-3xl font-semi-bold text-indigo-700 ml-10">
-                             {textUser[1]}
-                         </h1>
-                     }
                  </div>
-
-                <form className="mt-6 ml-4">
-                    {(id != null)?
-                        (usersDataLabels && usersDataLabels.map((key) => {
-                    return <div className="mb-2">
-                                <label
-                                    htmlFor="email"
-                                    className="block text-sm font-semi-bold text-gray-800"
-                                >
-                                {key.key}
-                                </label>
-                                <input
-                                    type="text"
-                                    value={key.value}
-                                    className="block w-full px-4 py-2 mt-2 text-indigo-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                />
-                            </div>
-                    })):(<div>ddd</div>)}
-                    <div className="mt-6">
-                        <button
-                            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
-                            onClick={saveHandler}>
-                            Save
-                        </button>
-                    </div>
-                </form>
+                 <form className="mt-6 ml-4 w-80">
+                     <div className="mb-2">
+                         <label
+                             htmlFor="email"
+                             className="block text-sm font-semibold text-gray-800"
+                         >
+                             {firstNameText}
+                         </label>
+                         <input
+                             type="text"
+                             value={firstName}
+                             onChange={setFirstName}
+                             className={inputClasses}
+                         />
+                     </div>
+                     <div className="mb-2">
+                         <label
+                             htmlFor="email"
+                             className="block text-sm font-semibold text-gray-800"
+                         >
+                             {lastNameText}
+                         </label>
+                         <input
+                             type="text"
+                             value={lastName}
+                             onChange={setLastName}
+                             className={inputClasses}
+                         />
+                     </div>
+                     <div className="mb-2">
+                         <label
+                             htmlFor="email"
+                             className="block text-sm font-semibold text-gray-800"
+                         >
+                             {emailText}
+                         </label>
+                         <input
+                             type="email"
+                             value={email}
+                             onChange={setEmail}
+                             className={inputClasses}
+                         />
+                     </div>
+                     <div className="mb-2">
+                         <label
+                             htmlFor="email"
+                             className="block text-sm font-semibold text-gray-800"
+                         >
+                             {statusText}
+                         </label>
+                         <input
+                             type="text"
+                             value={status}
+                             onChange={setStatus}
+                             className={inputClasses}
+                         />
+                     </div>
+                     <div className="mt-6">
+                         <button
+                             className={saveFormButtonClasses}
+                             onClick={saveHandler}>
+                             {saveText}
+                         </button>
+                     </div>
+                 </form>
             </div>
         </div>
     );
