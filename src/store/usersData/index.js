@@ -10,6 +10,13 @@ const usersDataSlice = createSlice({
     reducers: {
         setUsersData(state, action) {
             state.usersData = action.payload;
+        },
+        deleteUser(state, action) {
+            const userId = action.payload;
+            state.usersData = state.usersData.filter((user) =>
+            user.id !== userId)
+            //vraca novi niz svih elemenata koji nisu jednaki elementu sa
+            // tim id
         }
     }
 });

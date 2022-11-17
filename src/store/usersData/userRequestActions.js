@@ -1,5 +1,5 @@
 import {API_BASE_URL} from "../../constants/apiUrls";
-import {USERS_FETCH_ERROR} from "../../constants/apiMessages";
+import {USERS_FETCH_ERROR, DELETE_USER_ERROR} from "../../constants/apiMessages";
 import {usersDataActions} from "./index";
 
 
@@ -31,6 +31,30 @@ export const getUsersData = () => {
         };
         try {
             await fetchUsersData();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+export const deleteUserData = (id) => {
+
+    return async dispatch => {
+        const deleteUserRequest = async () => {
+            const response = await fetch(`${API_BASE_URL}User/${id}`, {
+                method: 'DELETE',
+                // mode: 'cors',
+                headers: {
+                    "Access-Control-Allow-Methods": '*'
+                }
+            });
+            if (!response.ok || response.status !== 200) {
+                throw new Error(`${DELETE_USER_ERROR}`);
+            }
+            console.log(id)
+            dispatch(usersDataActions.deleteUser(id));
+        };
+        try {
+            await deleteUserRequest();
         } catch (e) {
             console.log(e);
         }

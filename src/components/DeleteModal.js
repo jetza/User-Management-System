@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {pinkButtonClasses} from "../constants/cssClasses.js"
 import {deleteUserText,
         questionDeleteUserText,
@@ -7,7 +7,7 @@ import {deleteUserText,
 } from "../constants/texts"
 
 const DeleteModal = () => {
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
     return (
         <>
             <button
