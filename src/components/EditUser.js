@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {inputClasses, saveFormButtonClasses} from "../constants/cssClasses.js";
 import {useSelector} from "react-redux";
+import {updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
+import {inputClasses, saveFormButtonClasses} from "../constants/cssClasses.js";
 import {editUserText,
         firstNameText,
         lastNameText,
@@ -20,6 +21,7 @@ const EditUser = () => {
     const userIdObject = state.usersData.find(r => r.id === userParamId);
     const displayStatus = userIdObject.status.toString()? "Active": "Not Active";
 
+    const [id, setId] = useState(userParamId);
     const [firstName, setFirstName] = useState(userIdObject.firstName);
     const [lastName, setLastName] = useState(userIdObject.lastName);
     const [email, setEmail] = useState(userIdObject.email);
@@ -28,7 +30,17 @@ const EditUser = () => {
     function homeNavigate() {
         navigate(-1);
     }
-    function saveHandler() {
+    function saveHandler(id) {
+
+        const updatedUser = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            status: status
+        };
+        // console.log(updatedUser, id);
+        updateUserData(updatedUser, id);
+        navigate(-1);
         alert("You saved me!")
     }
 
@@ -61,7 +73,7 @@ const EditUser = () => {
                          <input
                              type="text"
                              value={firstName}
-                             onChange={setFirstName}
+                             onChange={(e) => setFirstName(e.target.value)}
                              className={inputClasses}
                          />
                      </div>
@@ -75,7 +87,7 @@ const EditUser = () => {
                          <input
                              type="text"
                              value={lastName}
-                             onChange={setLastName}
+                             onChange={(e) => setLastName(e.target.value)}
                              className={inputClasses}
                          />
                      </div>
@@ -89,7 +101,7 @@ const EditUser = () => {
                          <input
                              type="email"
                              value={email}
-                             onChange={setEmail}
+                             onChange={(e) => setEmail(e.target.value)}
                              className={inputClasses}
                          />
                      </div>
@@ -103,14 +115,14 @@ const EditUser = () => {
                          <input
                              type="text"
                              value={status}
-                             onChange={setStatus}
+                             onChange={(e) => setStatus(e.target.value)}
                              className={inputClasses}
                          />
                      </div>
                      <div className="mt-6">
                          <button
                              className={saveFormButtonClasses}
-                             onClick={saveHandler}>
+                             onClick={() => saveHandler(id)}>
                              {saveText}
                          </button>
                      </div>

@@ -15,21 +15,18 @@ import {userNameText,
 const UserList = () => {
 
     const [showModal, setShowModal] = useState(false);
-    const [id, setId] = useState(null);
     const state = useSelector( state => state.usersData);
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
     function editUserNavigate(userId) {
-        setId(userId);
-        navigate(`../edit-user?id=` + id);
+        navigate(`../edit-user?id=` + userId);
     }
-    function showModalW(userId){
+    function showModalW(){
     setShowModal(true)
                        }
     function deleteUser(userId) {
         setShowModal(false);
-        setId(userId);
         dispatch(deleteUserData(userId));
     }
 
@@ -82,7 +79,7 @@ const UserList = () => {
                                                             type="button"
                                                             onClick={() => showModalW(user.id)}
                                                         >
-                                                            Delete
+                                                            {deleteText}
                                                         </button>
                                                         {showModal ? (
                                                             <>

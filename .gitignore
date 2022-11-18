@@ -12,6 +12,8 @@
 /build
 
 # misc
+/.idea/
+.idea/workspace.xml
 .DS_Store
 .env.local
 .env.development.local

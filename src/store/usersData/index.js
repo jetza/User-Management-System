@@ -17,6 +17,9 @@ const usersDataSlice = createSlice({
             user.id !== userId)
             //vraca novi niz svih elemenata koji nisu jednaki elementu sa
             // tim id
+        },
+        updateUser(state, action) {
+            state.usersData = action.payload;
         }
     }
 });
