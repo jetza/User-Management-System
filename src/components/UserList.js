@@ -15,7 +15,7 @@ import {userNameText,
 const UserList = () => {
 
     const [showModal, setShowModal] = useState(false);
-    const [id, setId] = useState(1);
+    const [id, setId] = useState(null);
     const state = useSelector( state => state.usersData);
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -24,14 +24,14 @@ const UserList = () => {
         setId(userId);
         navigate(`../edit-user?id=` + id);
     }
+    function showModalW(userId){
+    setShowModal(true)
+                       }
     function deleteUser(userId) {
-        setShowModal(true);
+        setShowModal(false);
         setId(userId);
-        dispatch(deleteUserData(id));
+        dispatch(deleteUserData(userId));
     }
-    // useEffect(() => {
-    //     dispatch(deleteUserData(id));
-    // }, [dispatch, id]);
 
     useEffect(() => {
         dispatch(getUsersData());
@@ -80,7 +80,7 @@ const UserList = () => {
                                                         <button
                                                             className={pinkButtonClasses}
                                                             type="button"
-                                                            onClick={() => deleteUser(user.id)}
+                                                            onClick={() => showModalW(user.id)}
                                                         >
                                                             Delete
                                                         </button>
@@ -124,7 +124,7 @@ const UserList = () => {
                                                                                 <button
                                                                                     className="bg-indigo-700 text-white active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                                                     type="button"
-                                                                                    onClick={() => setShowModal(false)}
+                                                                                    onClick={() => deleteUser(user.id)}
                                                                                 >
                                                                                     {deleteText}
                                                                                 </button>
