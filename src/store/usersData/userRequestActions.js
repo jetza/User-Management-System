@@ -27,6 +27,7 @@ export const getUsersData = () => {
                 }
             })
             dispatch(usersDataActions.setUsersData(newUsersData));
+            //console.log(newUsersData)
 
         };
         try {
@@ -49,7 +50,7 @@ export const deleteUserData = id => {
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${DELETE_USER_ERROR}`);
             }
-            console.log(id)
+            //console.log(id)
             dispatch(usersDataActions.deleteUser(id));
         };
         try {
@@ -66,14 +67,13 @@ export const updateUserData = (updatedUser, id) => {
         const updateUserRequest = async () => {
             const response = await fetch(`${API_BASE_URL}Users/${id}`, {
                 method: 'PUT',
-                // mode: 'cors',
                 headers: {
                     "Access-Control-Allow-Methods": '*'
                 },
-                body: JSON.stringify(updatedUser, id)
+                body: JSON.stringify(updatedUser)
 
             });
-            console.log(response)
+            //console.log(response)
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_ERROR}`);
             }
@@ -83,6 +83,33 @@ export const updateUserData = (updatedUser, id) => {
         };
         try {
             await updateUserRequest();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const createUserData = (createdUser) => {
+
+    return async dispatch => {
+        const createUserRequest = async () => {
+            const response = await fetch(`${API_BASE_URL}Users`, {
+                method: 'POST',
+                headers: {
+                    "Access-Control-Allow-Methods": '*'
+                },
+                body: JSON.stringify(createdUser)
+
+            });
+            //console.log(response)
+            if (!response.ok || response.status !== 200) {
+                throw new Error(`${UPDATE_USER_ERROR}`);
+            }
+            const createdUserData = await response.json();
+            dispatch(usersDataActions.createUser(createdUserData));
+        };
+        try {
+            await createUserRequest();
         } catch (e) {
             console.log(e);
         }

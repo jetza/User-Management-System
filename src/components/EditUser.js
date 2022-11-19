@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useSelector} from "react-redux";
 import {updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
@@ -36,12 +36,22 @@ const EditUser = () => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            status: status
+            status: status === "Active"? 1: 0
         };
         // console.log(updatedUser, id);
         updateUserData(updatedUser, id);
         navigate(-1);
         alert("You saved me!")
+        console.log(updatedUser)
+    }
+
+    function statusHandler(e){
+        if(e.target.value === "1")
+            setStatus("Active");
+        else if(e.target.value === "0")
+            setStatus("Not Active");
+        else
+            setStatus("");
     }
 
     return (
@@ -110,12 +120,12 @@ const EditUser = () => {
                              htmlFor="email"
                              className="block text-sm font-semibold text-gray-800"
                          >
-                             {statusText}
+                             {statusText} {status === ""?(<span className="text-red-500">[Enter 1 or 0]</span>): <span></span>}
                          </label>
                          <input
                              type="text"
                              value={status}
-                             onChange={(e) => setStatus(e.target.value)}
+                             onChange={statusHandler}
                              className={inputClasses}
                          />
                      </div>
