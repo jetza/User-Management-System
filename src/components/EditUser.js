@@ -1,8 +1,11 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {useSelector} from "react-redux";
 import {updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
-import {inputClasses, saveFormButtonClasses} from "../constants/cssClasses.js";
+import {inputClasses,
+        saveDisabledFormButtonClasses,
+        saveFormButtonClasses
+} from "../constants/cssClasses.js";
 import {editUserText,
         firstNameText,
         lastNameText,
@@ -38,11 +41,8 @@ const EditUser = () => {
             email: email,
             status: status === "Active"? 1: 0
         };
-        // console.log(updatedUser, id);
         updateUserData(updatedUser, id);
         navigate(-1);
-        alert("You saved me!")
-        console.log(updatedUser)
     }
 
     function statusHandler(e){
@@ -131,7 +131,8 @@ const EditUser = () => {
                      </div>
                      <div className="mt-6">
                          <button
-                             className={saveFormButtonClasses}
+                             className={status === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
+                             disabled={status === ""}
                              onClick={() => saveHandler(id)}>
                              {saveText}
                          </button>
