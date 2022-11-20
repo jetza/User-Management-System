@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {createUserData} from "../store/usersData/userRequestActions";
 import {inputClasses,
         saveDisabledFormButtonClasses,
@@ -18,6 +19,7 @@ import {createUserText,
 const CreateUser = () => {
 //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
     let navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -38,11 +40,10 @@ const CreateUser = () => {
             userName: userName,
             password: password,
             email: email,
-            status: status === "Active"? 1: 0
+            status: status === "Active"
         };
-        createUserData(createdUser);
+        dispatch(createUserData(createdUser));
         navigate(`../`);
-        console.log(createdUser);
     }
 
     function statusSave(e){
@@ -161,6 +162,7 @@ const CreateUser = () => {
                         <button
                             className={status === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
                             disabled={status === ""}
+                            type="submit"
                             onClick={saveCreatedUser}>
                             {saveText}
                         </button>

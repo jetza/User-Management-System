@@ -27,8 +27,6 @@ export const getUsersData = () => {
                 }
             })
             dispatch(usersDataActions.setUsersData(newUsersData));
-            //console.log(newUsersData)
-
         };
         try {
             await fetchUsersData();
@@ -50,7 +48,6 @@ export const deleteUserData = id => {
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${DELETE_USER_ERROR}`);
             }
-            //console.log(id)
             dispatch(usersDataActions.deleteUser(id));
         };
         try {
@@ -62,7 +59,6 @@ export const deleteUserData = id => {
 };
 
 export const updateUserData = (updatedUser, id) => {
-    //console.log(updatedUser, id)
     return async dispatch => {
         const updateUserRequest = async () => {
             const response = await fetch(`${API_BASE_URL}Users/${id}`, {
@@ -74,12 +70,10 @@ export const updateUserData = (updatedUser, id) => {
                 },
                 body: JSON.stringify(updatedUser)
             });
-            //console.log(JSON.stringify(updatedUser))
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_ERROR}`);
             }
             const updatedUserData = await response.json();
-            //console.log("updatedUserData",updatedUserData)
             dispatch(usersDataActions.updateUser(updatedUserData));
         };
         try {
@@ -91,18 +85,20 @@ export const updateUserData = (updatedUser, id) => {
 };
 
 export const createUserData = (createdUser) => {
-
+    //console.log("create user call function",createdUser)
     return async dispatch => {
         const createUserRequest = async () => {
             const response = await fetch(`${API_BASE_URL}Users`, {
                 method: 'POST',
                 headers: {
-                    "Access-Control-Allow-Methods": '*'
+                    "Access-Control-Allow-Methods": '*',
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify(createdUser)
 
             });
-            //console.log(response)
+            console.log("create user response",response)
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_ERROR}`);
             }

@@ -15,6 +15,7 @@ import {userNameText,
 const UserList = () => {
 
     const [showModal, setShowModal] = useState(false);
+    const [id, setId] = useState(null)
     const state = useSelector( state => state.usersData);
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -22,12 +23,15 @@ const UserList = () => {
     function editUserNavigate(userId) {
         navigate(`../edit-user?id=` + userId);
     }
-    function showModalW(){
-    setShowModal(true)
-                       }
-    function deleteUser(userId) {
+
+    function showModalW(userId){
+        setId(userId);
+        setShowModal(true)
+    }
+
+    function deleteUser() {
         setShowModal(false);
-        dispatch(deleteUserData(userId));
+        dispatch(deleteUserData(id));
     }
 
     useEffect(() => {
@@ -97,10 +101,10 @@ const UserList = () => {
                                                                                     {deleteUserText}
                                                                                 </h3>
                                                                                 <button
-                                                                                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                                                                    className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                                                                     onClick={() => setShowModal(false)}
                                                                                 >
-                                                                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                                                                <span className="bg-transparent text-gray-700 h-6 w-6  text-2xl block outline-none focus:outline-none">
                                                                                   ×
                                                                                 </span>
                                                                                 </button>
@@ -123,7 +127,7 @@ const UserList = () => {
                                                                                 <button
                                                                                     className="bg-indigo-700 text-white active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                                                     type="button"
-                                                                                    onClick={() => deleteUser(user.id)}
+                                                                                    onClick={deleteUser}
                                                                                 >
                                                                                     {deleteText}
                                                                                 </button>
@@ -135,10 +139,6 @@ const UserList = () => {
                                                             </>
                                                         ) : null}
                                                 </div>
-
-
-
-
                                             </div>
                                         })}
                                     </div>
