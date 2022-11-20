@@ -62,18 +62,19 @@ export const deleteUserData = id => {
 };
 
 export const updateUserData = (updatedUser, id) => {
-    console.log(updatedUser, id)
+    //console.log(updatedUser, id)
     return async dispatch => {
         const updateUserRequest = async () => {
             const response = await fetch(`${API_BASE_URL}Users/${id}`, {
                 method: 'PUT',
                 headers: {
-                    "Access-Control-Allow-Methods": '*'
+                    "Access-Control-Allow-Methods": '*',
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify(updatedUser)
-
             });
-            //console.log(response)
+            //console.log(JSON.stringify(updatedUser))
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_ERROR}`);
             }

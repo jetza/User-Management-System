@@ -19,6 +19,7 @@ const usersDataSlice = createSlice({
         },
         updateUser(state, action) {
             const userId = action.payload;
+            //console.log("id", userId)
             const updatedUser = state.usersData.find(user => user.id === userId);
             state.usersData = state.usersData.map(user => user.id !== userId? user: updatedUser );
             //vraca novi niz sa izmenjenim objektom gde je id objekta iz usersData jednak userId

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useSelector} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
 import {inputClasses,
@@ -15,14 +15,17 @@ import {editUserText,
 } from "../constants/texts.js";
 
 const EditUser = () => {
-
+    //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
+    //TODO FIX USESTATE UPDATING AFTER 2. RENDER, STATUS NOT CHANGING
     let navigate = useNavigate();
+    const dispatch = useDispatch();
     const state = useSelector( state => state.usersData);
 
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
     const displayStatus = userIdObject.status.toString()? "Active": "Not Active";
+    //console.log(displayStatus)
 
     const [id, setId] = useState(userParamId);
     const [firstName, setFirstName] = useState(userIdObject.firstName);
@@ -33,21 +36,21 @@ const EditUser = () => {
     function homeNavigate() {
         navigate(-1);
     }
-    function saveHandler(id) {
 
+    function saveEditedUser(id) {
         const updatedUser = {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            status: status === "Active"? 1: 0
+            status: status === "Active"
         };
-        updateUserData(updatedUser, id);
+        dispatch(updateUserData(updatedUser, id));
         navigate(-1);
     }
 
-    function statusHandler(e){
-        if(e.target.value === "1")
-            setStatus("Active");
+    function statusEdit(e){
+        if(e.target.value === "1") {
+        }
         else if(e.target.value === "0")
             setStatus("Not Active");
         else
@@ -125,7 +128,7 @@ const EditUser = () => {
                          <input
                              type="text"
                              value={status}
-                             onChange={statusHandler}
+                             onChange={statusEdit}
                              className={inputClasses}
                          />
                      </div>
@@ -133,7 +136,7 @@ const EditUser = () => {
                          <button
                              className={status === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
                              disabled={status === ""}
-                             onClick={() => saveHandler(id)}>
+                             onClick={() => saveEditedUser(id)}>
                              {saveText}
                          </button>
                      </div>

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {inputClasses, saveFormButtonClasses} from "../constants/cssClasses.js";
+import {createUserData} from "../store/usersData/userRequestActions";
+import {inputClasses,
+        saveDisabledFormButtonClasses,
+        saveFormButtonClasses
+} from "../constants/cssClasses.js";
 import {createUserText,
         firstNameText,
         lastNameText,
@@ -11,16 +15,43 @@ import {createUserText,
         saveText
 } from "../constants/texts.js";
 
-
 const CreateUser = () => {
-
-    function saveHandler() {
-        alert("You saved me!")
-    }
+//TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
     let navigate = useNavigate();
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState("");
 
     function homeNavigate() {
         navigate(-1);
+    }
+
+    function saveCreatedUser() {
+
+        const createdUser = {
+            firstName: firstName,
+            lastName: lastName,
+            userName: userName,
+            password: password,
+            email: email,
+            status: status === "Active"? 1: 0
+        };
+        createUserData(createdUser);
+        navigate(`../`);
+        console.log(createdUser);
+    }
+
+    function statusSave(e){
+        if(e.target.value === "1")
+            setStatus("Active");
+        else if(e.target.value === "0")
+            setStatus("Not Active");
+        else
+            setStatus("");
     }
 
     return (
@@ -51,6 +82,8 @@ const CreateUser = () => {
                         </label>
                         <input
                             type="text"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                             className={inputClasses}
                         />
                     </div>
@@ -63,6 +96,8 @@ const CreateUser = () => {
                         </label>
                         <input
                             type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                             className={inputClasses}
                         />
                     </div>
@@ -75,6 +110,8 @@ const CreateUser = () => {
                         </label>
                         <input
                             type="text"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
                             className={inputClasses}
                         />
                     </div>
@@ -87,6 +124,8 @@ const CreateUser = () => {
                         </label>
                         <input
                             type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className={inputClasses}
                         />
                     </div>
@@ -99,6 +138,8 @@ const CreateUser = () => {
                         </label>
                         <input
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className={inputClasses}
                         />
                     </div>
@@ -107,17 +148,20 @@ const CreateUser = () => {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            {statusText}
+                            {statusText}{status === ""?(<span className="text-red-500">[Enter 1 or 0]</span>): <span></span>}
                         </label>
                         <input
                             type="text"
+                            value={status}
+                            onChange={statusSave}
                             className={inputClasses}
                         />
                     </div>
                     <div className="mt-6">
                         <button
-                            className={saveFormButtonClasses}
-                            onClick={saveHandler}>
+                            className={status === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
+                            disabled={status === ""}
+                            onClick={saveCreatedUser}>
                             {saveText}
                         </button>
                     </div>

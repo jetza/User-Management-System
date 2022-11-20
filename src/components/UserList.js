@@ -34,9 +34,11 @@ const UserList = () => {
         dispatch(getUsersData());
     }, [dispatch]);
 
-    function assignPermissionNavigate() {
-        navigate("../assign-permissions");
+    function assignPermissionNavigate(userId) {
+        navigate(`../assign-permissions?id=` + userId);
     }
+
+    //TODO SORT, ORDER, PAGINATION, LAZY LOADING, SPINNER
     return (
                     <div className="p-4 bg-gray-50">
                         <div className="bg-white p-4 rounded-md">
@@ -67,7 +69,7 @@ const UserList = () => {
                                                     <button
                                                         className={pinkButtonClasses}
                                                         type="button"
-                                                        onClick={assignPermissionNavigate}
+                                                        onClick={() => assignPermissionNavigate(user.id)}
                                                     >
                                                         {assignText}
                                                     </button>
@@ -133,6 +135,10 @@ const UserList = () => {
                                                             </>
                                                         ) : null}
                                                 </div>
+
+
+
+
                                             </div>
                                         })}
                                     </div>
