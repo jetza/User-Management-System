@@ -1,13 +1,21 @@
 import React, {useState} from 'react';
-import {pinkButtonClasses} from "../constants/cssClasses.js"
+import {useDispatch} from "react-redux";
+import {deleteUserData} from "../store/usersData/userRequestActions";
+import {pinkButtonClasses} from "../constants/cssClasses.js";
 import {deleteUserText,
         questionDeleteUserText,
         discardText,
         deleteText
 } from "../constants/texts"
 
-const DeleteModal = () => {
+const DeleteModal = ({id}) => {
+    const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
+
+    function deleteUser() {
+        setShowModal(false);
+        dispatch(deleteUserData(id));
+    }
     return (
         <>
             <button
@@ -15,7 +23,7 @@ const DeleteModal = () => {
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                Delete
+                {deleteText}
             </button>
             {showModal ? (
                 <>
@@ -31,10 +39,10 @@ const DeleteModal = () => {
                                         {deleteUserText}
                                     </h3>
                                     <button
-                                        className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                        className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                         onClick={() => setShowModal(false)}
                                     >
-                                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                    <span className="bg-transparent text-gray-700 h-6 w-6 text-2xl block outline-none focus:outline-none">
                                       ×
                                     </span>
                                     </button>
@@ -57,7 +65,7 @@ const DeleteModal = () => {
                                     <button
                                         className="bg-indigo-700 text-white active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={deleteUser}
                                     >
                                         {deleteText}
                                     </button>
