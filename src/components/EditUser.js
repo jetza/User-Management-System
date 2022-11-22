@@ -13,10 +13,11 @@ import {editUserText,
         statusText,
         saveText
 } from "../constants/texts.js";
+import {ArrowLeft} from "../constants/svgIcons";
 
 const EditUser = () => {
     //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
-    //TODO FIX USESTATE UPDATING AFTER 2. RENDER, STATUS NOT CHANGING
+    //TODO FIX USESTATE UPDATING AFTER 2. RENDER
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const state = useSelector( state => state.usersData);
@@ -24,14 +25,14 @@ const EditUser = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
-    const displayStatus = userIdObject.status.toString()? "Active": "Not Active";
-    //console.log(displayStatus)
+    const displayStatus = ((userIdObject.status.toString()) === "true")? "Active": "Not Active";
 
     const [id, setId] = useState(userParamId);
     const [firstName, setFirstName] = useState(userIdObject.firstName);
     const [lastName, setLastName] = useState(userIdObject.lastName);
     const [email, setEmail] = useState(userIdObject.email);
-    const [status, setStatus] = useState(displayStatus);
+    const [statusName, setStatusName] = useState(displayStatus);
+    const [status, setStatus] = useState(false);
 
     function homeNavigate() {
         navigate(-1);
@@ -42,19 +43,23 @@ const EditUser = () => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            status: status === "Active"
+            status: status
         };
         dispatch(updateUserData(updatedUser, id));
-        navigate(-1);
+        navigate("../");
     }
 
     function statusEdit(e){
         if(e.target.value === "1") {
+            setStatus(true);
+            setStatusName("Active");
         }
-        else if(e.target.value === "0")
-            setStatus("Not Active");
+        else if(e.target.value === "0"){
+            setStatus(false);
+            setStatusName("Not Active");
+        }
         else
-            setStatus("");
+            setStatusName("");
     }
 
     return (
@@ -67,9 +72,7 @@ const EditUser = () => {
                          type="button"
                          onClick={homeNavigate}
                      >
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                         </svg>
+                         <ArrowLeft/>
                      </button>
                          <h1 className="text-3xl font-semi-bold text-indigo-700 ml-10">
                              {editUserText}
@@ -123,19 +126,19 @@ const EditUser = () => {
                              htmlFor="email"
                              className="block text-sm font-semibold text-gray-800"
                          >
-                             {statusText} {status === ""?(<span className="text-red-500">[Enter 1 or 0]</span>): <span></span>}
+                             {statusText} {statusName === ""?(<span className="text-red-500">[Enter 1 or 0]</span>): <span></span>}
                          </label>
                          <input
                              type="text"
-                             value={status}
+                             value={statusName}
                              onChange={statusEdit}
                              className={inputClasses}
                          />
                      </div>
                      <div className="mt-6">
                          <button
-                             className={status === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
-                             disabled={status === ""}
+                             className={statusName === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
+                             disabled={statusName === ""}
                              onClick={() => saveEditedUser(id)}>
                              {saveText}
                          </button>

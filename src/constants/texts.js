@@ -10,6 +10,7 @@ export const createUserText = "Create User";
 export const deleteUserText = "Delete User";
 
 export const questionDeleteUserText = "Are you sure you want to delete this user?";
+export const usersText = "Users";
 
 export const firstNameText = "First Name";
 export const lastNameText = "Last Name";
