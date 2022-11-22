@@ -11,6 +11,11 @@ export const deleteUserText = "Delete User";
 
 export const questionDeleteUserText = "Are you sure you want to delete this user?";
 export const usersText = "Users";
+export const permissionsForUserText = "Permissions for user: ";
+export const addPermissionText = "Add Permission";
+export const removePermissionText = "Remove Permission";
+export const viewPermissionsText = "View All Available Permissions";
+
 
 export const firstNameText = "First Name";
 export const lastNameText = "Last Name";

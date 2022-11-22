@@ -43,7 +43,7 @@ const UserList = () => {
 
     useEffect(() => {
         dispatch(getUsersData());
-    }, [dispatch]);
+    }, ); //removed dependency array for rendering page after changing state
 
     function assignPermissionNavigate(userId) {
         navigate(`../assign-permissions?id=` + userId);

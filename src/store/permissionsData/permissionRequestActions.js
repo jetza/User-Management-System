@@ -1,4 +1,3 @@
-import {API_BASE_URL} from "../../constants/apiUrls";
 import {PERMISSIONS_FETCH_ERROR} from "../../constants/apiMessages";
 import {permissionsDataActions} from "./index";
 
@@ -6,7 +5,7 @@ export const getPermissionsData = () => {
 
     return async dispatch => {
         const fetchPermissionsData = async () => {
-            const response = await fetch(`${API_BASE_URL}Permissions`, {
+            const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Permissions`, {
                 method: 'GET'
             });
             if (!response.ok) {

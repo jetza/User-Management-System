@@ -1,13 +1,12 @@
-import {API_BASE_URL} from "../../constants/apiUrls";
 import {USERS_FETCH_ERROR, DELETE_USER_ERROR, UPDATE_USER_ERROR} from "../../constants/apiMessages";
 import {usersDataActions} from "./index";
 
 
 export const getUsersData = () => {
-
+console.log(`${process.env.LOCAL_API_URL}Users`)
     return async dispatch => {
         const fetchUsersData = async () => {
-            const response = await fetch(`${API_BASE_URL}Users`, {
+            const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users`, {
                 method: 'GET'
             });
             if (!response.ok) {
@@ -39,7 +38,7 @@ export const deleteUserData = id => {
 
     return async dispatch => {
         const deleteUserRequest = async () => {
-            const response = await fetch(`${API_BASE_URL}User/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}User/${id}`, {
                 method: 'DELETE',
                 headers: {
                     "Access-Control-Allow-Methods": '*'
@@ -61,7 +60,7 @@ export const deleteUserData = id => {
 export const updateUserData = (updatedUser, id) => {
     return async dispatch => {
         const updateUserRequest = async () => {
-            const response = await fetch(`${API_BASE_URL}Users/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users/${id}`, {
                 method: 'PUT',
                 headers: {
                     "Access-Control-Allow-Methods": '*',
@@ -88,7 +87,7 @@ export const createUserData = (createdUser) => {
     //console.log("create user call function",createdUser)
     return async dispatch => {
         const createUserRequest = async () => {
-            const response = await fetch(`${API_BASE_URL}Users`, {
+            const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users`, {
                 method: 'POST',
                 headers: {
                     "Access-Control-Allow-Methods": '*',
