@@ -6,32 +6,30 @@ import {useDispatch, useSelector} from "react-redux";
 import DeleteModal from "./DeleteModal";
 import {ArrowSort} from "../constants/svgIcons.js"
 import {pinkButtonClasses} from "../constants/cssClasses.js";
-import {
-    assignText,
-    deleteText,
-    editText,
-    emailText,
-    firstNameText,
-    lastNameText,
-    passwordText,
-    statusText,
-    userNameText,
-    usersText,
+import {assignText,
+        deleteText,
+        editText,
+        emailText,
+        firstNameText,
+        lastNameText,
+        passwordText,
+        statusText,
+        userNameText,
+        usersText,
 } from "../constants/texts.js";
 
 const UserList = () => {
 
     const state = useSelector( state => state.usersData);
-    const textsUserList = [
-        firstNameText,
-        lastNameText,
-        userNameText,
-        passwordText,
-        emailText,
-        statusText,
-        editText,
-        assignText,
-        deleteText
+    const textsUserList = [ firstNameText,
+                            lastNameText,
+                            userNameText,
+                            passwordText,
+                            emailText,
+                            statusText,
+                            editText,
+                            assignText,
+                            deleteText
     ];
 
     const dispatch = useDispatch();
@@ -49,7 +47,7 @@ const UserList = () => {
         navigate(`../assign-permissions?id=` + userId);
     }
 
-    //TODO FILTER, ORDER, PAGINATION, LAZY LOADING, SPINNER
+    //TODO FILTER, ORDER, PAGINATION, SPINNER
     return (
                     <div className="p-4 bg-gray-50">
                         <div className="bg-white p-4 rounded-md">

@@ -3,7 +3,6 @@ import {usersDataActions} from "./index";
 
 
 export const getUsersData = () => {
-console.log(`${process.env.LOCAL_API_URL}Users`)
     return async dispatch => {
         const fetchUsersData = async () => {
             const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users`, {
