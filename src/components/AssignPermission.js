@@ -1,26 +1,33 @@
-import React from 'react';
-import {
-    assignText,
-    editText,
-    userNameText
-} from "../constants/texts";
-import {pinkButtonClasses} from "../constants/cssClasses";
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-
+import {pinkButtonClasses} from "../constants/cssClasses";
+import {getUsersData} from "../store/usersData/userRequestActions";
+// import {useNavigate} from "react-router-dom";
+import {getPermissionsData} from "../store/permissionsData/permissionRequestActions.js"
+// import {
+//     assignText,
+//     editText,
+//     userNameText
+// } from "../constants/texts";
 
 
 const AssignPermission = () => {
 
     const state = useSelector( state => state.usersData);
+    const permissions = useSelector(state => state.permissionsData)
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
     //TODO SHIFT ADD PERMISSION BUTTON RIGHT TO THE PERMISSIONS HEADER, MAP PERMISSIONS
     //TODO CREATE NEW POST ENDPOINT TO API
-
+console.log(permissions.permissionsData)
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
+
+
+    useEffect(() => {
+        dispatch(getPermissionsData());
+    }, [dispatch]);
 
     return (
         <div className="p-4 bg-gray-50">
