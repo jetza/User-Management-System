@@ -8,13 +8,11 @@ import {getUserPermissionsData,
         updateUserPermissionsData
 } from "../store/userPermissionsData/userPermissionsRequestActions.js";
 import {actionsText,
-        addPermissionText,
         codeText, descriptionText,
         permissionsForUserText,
         removePermissionText,
 } from "../constants/texts";
 import ViewPermissionsModal from "./ViewPermissionsModal";
-import {userPermissionsDataActions} from "../store/userPermissionsData";
 
 const AssignPermission = () => {
 
@@ -30,23 +28,34 @@ const AssignPermission = () => {
     const userIdObject = state.usersData.find(r => r.id === userParamId);
 
     const userPermissionsLength = userPermissions.userPermissionsData.length;
-    let userPermissionsAssignedObject = [];
+    let userPermissionsAssignedObject = []; //sadrzi sve permisije za tog usera
 
     for(let i = 0; i < userPermissionsLength; i++){
-        userPermissionsAssignedObject[i] = permissions.permissionsData.find(r => r.id === userPermissions.userPermissionsData[i]);
+        userPermissionsAssignedObject[i] =
+            permissions.permissionsData.find(r => r.id === userPermissions.userPermissionsData[i]);
     }
 
-    const userPermissionsNotAssignedObject = permissions.permissionsData.filter(x => !userPermissionsAssignedObject.includes(x));
+    const userPermissionsNotAssignedObject = //sadrzi sve permisije koje nema taj user
+        permissions.permissionsData.filter(x => !userPermissionsAssignedObject.includes(x));
 
-    //dispatch(userPermissionsDataActions.setUserPermissionsById(userPermissionsNotAssignedObject));
     useEffect(() => {
         dispatch(getPermissionsData());
         dispatch(getUserPermissionsData(userParamId));
-        // dispatch(updateUserPermissionsData())
     }, [dispatch]);
 
     function homeNavigate() {
         navigate("../");
+    }
+
+    function deletePermission(permissionId) {
+        const removedPermissionId = userPermissionsAssignedObject.findIndex((obj) => obj.id === permissionId);
+        userPermissionsAssignedObject.splice(removedPermissionId, 1);
+        const permissionsArray = userPermissionsAssignedObject.map(a => a.id);
+        const result = {
+            "permissionIds": permissionsArray
+        };
+        console.log(result)
+        dispatch(updateUserPermissionsData(result, userParamId));
     }
 
     return (
@@ -86,20 +95,11 @@ const AssignPermission = () => {
                                     <div >
                                         {permission.description}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*    <button*/}
-                                    {/*        className={pinkButtonClasses}*/}
-                                    {/*        type="button"*/}
-                                    {/*        //onClick={assignPermissionNavigate}*/}
-                                    {/*    >*/}
-                                    {/*        {addPermissionText}*/}
-                                    {/*    </button>*/}
-                                    {/*</div>*/}
                                     <div>
                                         <button
                                             className={pinkButtonClasses}
                                             type="button"
-                                            //onClick={assignPermissionNavigate}
+                                            onClick={() => deletePermission(permission.id)}
                                         >
                                             {removePermissionText}
                                         </button>

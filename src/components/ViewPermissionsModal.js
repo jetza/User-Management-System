@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {pinkButtonClasses} from "../constants/cssClasses.js";
-import {
-    addPermissionText, okText,
-    viewPermissionsText
+import {addPermissionText,
+        codeText,
+        descriptionText,
+        okText,
+        viewPermissionsText
 } from "../constants/texts"
 
 const ViewPermissionsModal = ({permissionProps}) => {
 
     const [showModal, setShowModal] = useState(false);
-    //TODO FIX PERMISSIONS LIST TO LOOK NORMAL
+    //TODO FIX PERMISSIONS MODAL TO LOOK NORMAL
 
-    console.log(permissionProps)
     return (
         <>
             <button
@@ -45,8 +46,8 @@ const ViewPermissionsModal = ({permissionProps}) => {
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
                                     <div className="grid-cols-3 text-xl flex gap-6">
-                                        <h2>Code</h2>
-                                        <h2>Description</h2>
+                                        <h2>{codeText}</h2>
+                                        <h2>{descriptionText}</h2>
                                     </div>
                                     {permissionProps && permissionProps.map((data) => {
                                         return <div className="grid-cols-3 flex gap-6">

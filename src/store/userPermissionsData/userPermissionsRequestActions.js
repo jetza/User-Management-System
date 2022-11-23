@@ -26,6 +26,7 @@ export const getUserPermissionsData = id => {
 };
 
 export const updateUserPermissionsData = (updatedUserPermissions, id) => {
+    console.log(updatedUserPermissions)
     return async dispatch => {
         const updateUserPermissionsRequest = async () => {
             const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}User/${id}/Permissions`, {
@@ -37,11 +38,11 @@ export const updateUserPermissionsData = (updatedUserPermissions, id) => {
                 },
                 body: JSON.stringify(updatedUserPermissions)
             });
+            console.log(response)
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_PERMISSIONS_ERROR}`);
             }
             const updatedUsePermissionsData = await response.json();
-            console.log(updatedUsePermissionsData)
             dispatch(userPermissionsDataActions.updateUserPermissionsData(updatedUsePermissionsData));
         };
         try {

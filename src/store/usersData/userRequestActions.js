@@ -57,6 +57,7 @@ export const deleteUserData = id => {
 };
 
 export const updateUserData = (updatedUser, id) => {
+    //console.log(updatedUser)
     return async dispatch => {
         const updateUserRequest = async () => {
             const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users/${id}`, {
