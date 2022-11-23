@@ -14,13 +14,13 @@ import {actionsText,
         removePermissionText,
 } from "../constants/texts";
 import ViewPermissionsModal from "./ViewPermissionsModal";
+import {userPermissionsDataActions} from "../store/userPermissionsData";
 
 const AssignPermission = () => {
 
     const state = useSelector( state => state.usersData);
     const permissions = useSelector(permission => permission.permissionsData);
     const userPermissions = useSelector(userPermission => userPermission.userPermissionsData);
-    const permissionsLength = permissions.permissionsData.length;
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -29,10 +29,16 @@ const AssignPermission = () => {
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
 
-    for (let i = 0; i < permissionsLength; i++) {
+    const userPermissionsLength = userPermissions.userPermissionsData.length;
+    let userPermissionsAssignedObject = [];
 
+    for(let i = 0; i < userPermissionsLength; i++){
+        userPermissionsAssignedObject[i] = permissions.permissionsData.find(r => r.id === userPermissions.userPermissionsData[i]);
     }
 
+    const userPermissionsNotAssignedObject = permissions.permissionsData.filter(x => !userPermissionsAssignedObject.includes(x));
+
+    //dispatch(userPermissionsDataActions.setUserPermissionsById(userPermissionsNotAssignedObject));
     useEffect(() => {
         dispatch(getPermissionsData());
         dispatch(getUserPermissionsData(userParamId));
@@ -56,12 +62,12 @@ const AssignPermission = () => {
                                 {permissionsForUserText} {userIdObject.userName}</h2>
                         </div>
                         <div>
-                            <ViewPermissionsModal/>
+                            <ViewPermissionsModal permissionProps={userPermissionsNotAssignedObject}/>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <div className="flex grid grid-cols-4 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
+                            <div className="flex grid grid-cols-3 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
                                 <div>
                                     <span>{codeText}</span>
                                 </div>
@@ -72,23 +78,23 @@ const AssignPermission = () => {
                                     <span>{actionsText}</span>
                                 </div>
                             </div>
-                            {permissions.permissionsData && permissions.permissionsData.map((permission) => {
-                                return <div className="flex grid grid-cols-4 text-sm text-indigo-700 text-xl font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
+                            {userPermissionsAssignedObject && userPermissionsAssignedObject.map((permission) => {
+                                return <div className="flex grid grid-cols-3 text-sm text-indigo-700 text-xl font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
                                     <div >
                                         {permission.code}
                                     </div>
                                     <div >
                                         {permission.description}
                                     </div>
-                                    <div>
-                                        <button
-                                            className={pinkButtonClasses}
-                                            type="button"
-                                            //onClick={assignPermissionNavigate}
-                                        >
-                                            {addPermissionText}
-                                        </button>
-                                    </div>
+                                    {/*<div>*/}
+                                    {/*    <button*/}
+                                    {/*        className={pinkButtonClasses}*/}
+                                    {/*        type="button"*/}
+                                    {/*        //onClick={assignPermissionNavigate}*/}
+                                    {/*    >*/}
+                                    {/*        {addPermissionText}*/}
+                                    {/*    </button>*/}
+                                    {/*</div>*/}
                                     <div>
                                         <button
                                             className={pinkButtonClasses}

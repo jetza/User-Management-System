@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import {pinkButtonClasses} from "../constants/cssClasses.js";
-import {okText,
-        viewPermissionsText
+import {
+    addPermissionText, okText,
+    viewPermissionsText
 } from "../constants/texts"
-import {useSelector} from "react-redux";
 
-const ViewPermissionsModal = () => {
+const ViewPermissionsModal = ({permissionProps}) => {
 
     const [showModal, setShowModal] = useState(false);
-    const permissions = useSelector( state => state.permissionsData);
     //TODO FIX PERMISSIONS LIST TO LOOK NORMAL
 
+    console.log(permissionProps)
     return (
         <>
             <button
@@ -18,7 +18,7 @@ const ViewPermissionsModal = () => {
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                {viewPermissionsText}
+                {addPermissionText}
             </button>
             {showModal ? (
                 <>
@@ -30,7 +30,7 @@ const ViewPermissionsModal = () => {
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold text-indigo-700">
+                                    <h3 className="text-2xl font-semibold text-indigo-700">
                                         {viewPermissionsText}
                                     </h3>
                                     <button
@@ -44,18 +44,25 @@ const ViewPermissionsModal = () => {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
-                                    <div className="grid-cols-2 flex gap-6">
+                                    <div className="grid-cols-3 text-xl flex gap-6">
                                         <h2>Code</h2>
                                         <h2>Description</h2>
                                     </div>
-                                    {permissions.permissionsData && permissions.permissionsData.map((data) => {
-                                        return <div className="grid-cols-2 flex gap-6">
+                                    {permissionProps && permissionProps.map((data) => {
+                                        return <div className="grid-cols-3 flex gap-6">
                                                 <span className="my-4 text-slate-500 text-lg leading-relaxed">
                                                 {data.code}
                                                 </span>
                                                 <span className="my-4 text-slate-500 text-lg font-bold leading-relaxed">
                                                 {data.description}
                                             </span>
+                                            <button
+                                                className={pinkButtonClasses}
+                                                type="button"
+                                                //onClick={() => setShowModal(true)}
+                                            >
+                                                {addPermissionText}
+                                            </button>
                                         </div>
                                     })}
 

@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialUserPermissionsState = {
-    userPermissionsData: []
+    userPermissionsData: [],
+    userPermissionsById: []
 };
 
 const userPermissionsDataSlice = createSlice({
