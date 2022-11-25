@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useNavigate, useParams } from "react-router-dom";
 import {getUsersData} from "../store/usersData/userRequestActions";
 import {useDispatch, useSelector} from "react-redux";
 //import Spinner from "./Spinner";
@@ -21,27 +21,38 @@ import {assignText,
 const UserList = () => {
 
     const state = useSelector( state => state.usersData);
-    const textsUserList = [ firstNameText,
-                            lastNameText,
-                            userNameText,
-                            passwordText,
-                            emailText,
-                            statusText,
-                            editText,
-                            assignText,
-                            deleteText
-    ];
+    const [id, setId] = useState(null);
+    // useCallback(
+    //     () => {
+    //         useSelector( state => state.usersData)
+    //     },
+    //     [input],
+    // );
 
+
+
+    const textsUserList = [
+        firstNameText,
+        lastNameText,
+        userNameText,
+        passwordText,
+        emailText,
+        statusText,
+        editText,
+        assignText,
+        deleteText
+    ];
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    function editUserNavigate(userId) {
+    const editUserNavigate = (userId) => {
+        setId(userId);
         navigate(`../edit-user?id=` + userId);
     }
 
     useEffect(() => {
         dispatch(getUsersData());
-    }, ); //removed dependency array for rendering page after changing state
+    },[dispatch, id] ); //removed dependency array for rendering page after changing state
 
     function assignPermissionNavigate(userId) {
         navigate(`../assign-permissions?id=` + userId);
@@ -68,21 +79,21 @@ const UserList = () => {
                                         {state.usersData && state.usersData.map((user) => {
                                             return <div className="flex grid grid-cols-9 text-sm text-indigo-700 text-ll font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
                                                 <div>
-                                                    {user.firstName}
+                                                    {user?.firstName}
                                                 </div>
                                                 <div>
-                                                    {user.lastName}
+                                                    {user?.lastName}
                                                 </div>
                                                 <div>
-                                                    {user.userName}
+                                                    {user?.userName}
                                                 </div>
                                                 <div className="grid-cols-2 flex gap-4 justify-between pr-5">
                                                    <div>
-                                                       {(user.password).replace(/./g, '*')}
+                                                       {(user?.password).replace(/./g, '*')}
                                                    </div>
                                                 </div>
                                                 <div>
-                                                    {user.email}
+                                                    {user?.email}
                                                 </div>
                                                 <div>
                                                     {(user.status === true)? "Active": "Not Active"}
@@ -91,7 +102,7 @@ const UserList = () => {
                                                     <button
                                                         className={pinkButtonClasses}
                                                         type="button"
-                                                        onClick={() => editUserNavigate(user.id)}
+                                                        onClick={() => editUserNavigate(user?.id)}
                                                     >
                                                         {editText}
                                                     </button>
@@ -100,13 +111,13 @@ const UserList = () => {
                                                     <button
                                                         className={pinkButtonClasses}
                                                         type="button"
-                                                        onClick={() => assignPermissionNavigate(user.id)}
+                                                        onClick={() => assignPermissionNavigate(user?.id)}
                                                     >
                                                         {assignText}
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <DeleteModal id={user.id} />
+                                                    <DeleteModal id={user?.id} />
                                                 </div>
                                             </div>
                                         })}

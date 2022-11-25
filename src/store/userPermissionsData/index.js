@@ -13,10 +13,7 @@ const userPermissionsDataSlice = createSlice({
         },
         updateUserPermissionsData(state, action) {
             const userPermissionsId = action.payload;
-            console.log("userPermissionsId", userPermissionsId)
-            // const updatedUserPermission = state.userPermissionsData.find(userPermissions => userPermissions.id === userPermissionsId);
-            // state.userPermissionsData = state.userPermissionsData.map(userPermissions => userPermissions.id !== userPermissionsId? userPermissions: updatedUserPermissions );
-            //vraca novi niz sa izmenjenim objektom gde je id objekta iz usersData jednak userId
+
         }
     }
 });

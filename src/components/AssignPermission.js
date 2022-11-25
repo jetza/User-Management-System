@@ -40,8 +40,11 @@ const AssignPermission = () => {
 
     useEffect(() => {
         dispatch(getPermissionsData());
-        dispatch(getUserPermissionsData(userParamId));
     }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(getUserPermissionsData(userParamId));
+    }, []);
 
     function homeNavigate() {
         navigate("../");
@@ -54,8 +57,8 @@ const AssignPermission = () => {
         const result = {
             "permissionIds": permissionsArray
         };
-        console.log(result)
         dispatch(updateUserPermissionsData(result, userParamId));
+        navigate(`../assign-permissions?id=` + userParamId);
     }
 
     return (
@@ -68,7 +71,7 @@ const AssignPermission = () => {
                                 <ArrowLeft/>
                             </button>
                             <h2 className="mb-5 text-3xl ml-4 font-bold text-indigo-700">
-                                {permissionsForUserText} {userIdObject.userName}</h2>
+                                {permissionsForUserText} {userIdObject?.userName}</h2>
                         </div>
                         <div>
                             <ViewPermissionsModal permissionProps={userPermissionsNotAssignedObject}/>
@@ -90,16 +93,16 @@ const AssignPermission = () => {
                             {userPermissionsAssignedObject && userPermissionsAssignedObject.map((permission) => {
                                 return <div className="flex grid grid-cols-3 text-sm text-indigo-700 text-xl font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
                                     <div >
-                                        {permission.code}
+                                        {permission?.code}
                                     </div>
                                     <div >
-                                        {permission.description}
+                                        {permission?.description}
                                     </div>
                                     <div>
                                         <button
                                             className={pinkButtonClasses}
                                             type="button"
-                                            onClick={() => deletePermission(permission.id)}
+                                            onClick={() => deletePermission(permission?.id)}
                                         >
                                             {removePermissionText}
                                         </button>
