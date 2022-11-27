@@ -42,7 +42,9 @@ export const updateUserPermissionsData = (updatedUserPermissions, id) => {
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_PERMISSIONS_ERROR}`);
             }
+            //TODO: FIX Unexpected end of JSON input in response
             const updatedUsePermissionsData = await response.json();
+            console.log(updatedUsePermissionsData)
             dispatch(userPermissionsDataActions.updateUserPermissionsData(updatedUsePermissionsData));
         };
         try {

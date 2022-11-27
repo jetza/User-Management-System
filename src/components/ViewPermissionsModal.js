@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {pinkButtonClasses} from "../constants/cssClasses.js";
 import {addPermissionText,
         codeText,
@@ -6,11 +8,33 @@ import {addPermissionText,
         okText,
         viewPermissionsText
 } from "../constants/texts"
+import {getUserPermissionsData,
+        updateUserPermissionsData
+} from "../store/userPermissionsData/userPermissionsRequestActions";
 
-const ViewPermissionsModal = ({permissionProps}) => {
-
+const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, userId}) => {
     const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch();
+
+    let navigate = useNavigate();
     //TODO FIX PERMISSIONS MODAL TO LOOK NORMAL
+    //TODO: fix when deleting permission getUserPermissionsData not updating userpermissions state
+
+    const permissionLength = permissionsNotAssigned.length;
+
+    function assignPermission(permissionId) {
+        const permissionIdIndexToBeDeleted = permissionsNotAssigned.findIndex((obj) => obj.id === permissionId);
+        permissionsAssigned.push(permissionsNotAssigned[permissionIdIndexToBeDeleted]);
+        permissionsNotAssigned.splice(permissionIdIndexToBeDeleted, 1);
+        const permissionsArray = permissionsAssigned.map(a => a.id);
+        const result = {
+            "permissionIds": permissionsArray
+        };
+        dispatch(updateUserPermissionsData(result, userId));
+        dispatch(getUserPermissionsData(userId));
+        setShowModal(false);
+        navigate(`../assign-permissions?id=` + userId);
+    }
 
     return (
         <>
@@ -44,12 +68,13 @@ const ViewPermissionsModal = ({permissionProps}) => {
                                     </button>
                                 </div>
                                 {/*body*/}
-                                <div className="relative p-6 flex-auto">
+                                {(permissionLength !== 0)?
+                                    (<div className="relative p-6 flex-auto">
                                     <div className="grid-cols-3 text-xl flex gap-6">
                                         <h2>{codeText}</h2>
                                         <h2>{descriptionText}</h2>
                                     </div>
-                                    {permissionProps && permissionProps.map((data) => {
+                                    {permissionsNotAssigned && permissionsNotAssigned.map((data) => {
                                         return <div className="grid-cols-3 flex gap-6">
                                                 <span className="my-4 text-slate-500 text-lg leading-relaxed">
                                                 {data.code}
@@ -60,14 +85,14 @@ const ViewPermissionsModal = ({permissionProps}) => {
                                             <button
                                                 className={pinkButtonClasses}
                                                 type="button"
-                                                //onClick={() => setShowModal(true)}
+                                                onClick={() => assignPermission(data.id)}
                                             >
                                                 {addPermissionText}
                                             </button>
                                         </div>
                                     })}
 
-                                </div>
+                                    </div>): (<div>No additional permissions to add!</div>)}
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                                     <button

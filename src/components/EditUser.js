@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
@@ -14,18 +14,28 @@ import {editUserText,
         saveText
 } from "../constants/texts.js";
 import {ArrowLeft} from "../constants/svgIcons";
+import {userPermissionsDataActions} from "../store/userPermissionsData";
 
 const EditUser = () => {
     //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
     //TODO FIX USESTATE UPDATING AFTER 2. RENDER
     let navigate = useNavigate();
     const dispatch = useDispatch();
-    const state = useSelector( state => state.usersData);
+    const state = useSelector( state => state?.usersData);
+
+    //const temp = useSelector( temp => temp.usersData);
+    // console.log("temp", temp.usersData)
+    // const data = []
+    // const state = (temp.usersData.length === 0 || false)? (dispatch(getUsersData())): temp;
+    // console.log("2",state)
+    //     useEffect(() => {
+    //     }, [state]);
 
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
-    const displayStatus = ((userIdObject.status.toString()) === "true")? "Active": "Not Active";
+
+    const displayStatus = ((userIdObject?.status.toString()) === "true")? "Active": "Not Active";
 
     const [id, setId] = useState(userParamId);
     const [firstName, setFirstName] = useState(userIdObject.firstName);
@@ -62,6 +72,9 @@ const EditUser = () => {
             setStatusName("");
     }
 
+    // useEffect(() => {
+    //     dispatch(getUsersData());
+    // },[dispatch] );
     return (
 
         <div className="p-4 bg-gray-50">
@@ -88,7 +101,7 @@ const EditUser = () => {
                          </label>
                          <input
                              type="text"
-                             value={firstName}
+                             value={userIdObject.firstName}
                              onChange={(e) => setFirstName(e.target.value)}
                              className={inputClasses}
                          />
@@ -102,7 +115,7 @@ const EditUser = () => {
                          </label>
                          <input
                              type="text"
-                             value={lastName}
+                             value={userIdObject.lastName}
                              onChange={(e) => setLastName(e.target.value)}
                              className={inputClasses}
                          />
@@ -116,7 +129,7 @@ const EditUser = () => {
                          </label>
                          <input
                              type="email"
-                             value={email}
+                             value={userIdObject.email}
                              onChange={(e) => setEmail(e.target.value)}
                              className={inputClasses}
                          />

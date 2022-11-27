@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {pinkButtonClasses} from "../constants/cssClasses";
 import {getPermissionsData} from "../store/permissionsData/permissionRequestActions.js";
-import {ArrowLeft} from "../constants/svgIcons"
+import {ArrowLeft} from "../constants/svgIcons";
+import ViewPermissionsModal from "./ViewPermissionsModal";
 import {getUserPermissionsData,
         updateUserPermissionsData
 } from "../store/userPermissionsData/userPermissionsRequestActions.js";
@@ -12,30 +13,29 @@ import {actionsText,
         permissionsForUserText,
         removePermissionText,
 } from "../constants/texts";
-import ViewPermissionsModal from "./ViewPermissionsModal";
 
 const AssignPermission = () => {
 
     const state = useSelector( state => state.usersData);
     const permissions = useSelector(permission => permission.permissionsData);
     const userPermissions = useSelector(userPermission => userPermission.userPermissionsData);
-
     const dispatch = useDispatch();
     let navigate = useNavigate();
+
+    // const [userPermissionsAssigned, setUserPermissionsAssigned] = useState({});
+    // const [userPermissionsNotAssigned, setUserPermissionsNotAssigned] = useState({});
 
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
     const userIdObject = state.usersData.find(r => r.id === userParamId);
-
     const userPermissionsLength = userPermissions.userPermissionsData.length;
-    let userPermissionsAssignedObject = []; //sadrzi sve permisije za tog usera
+    let userPermissionsAssignedObject = [];
 
     for(let i = 0; i < userPermissionsLength; i++){
         userPermissionsAssignedObject[i] =
             permissions.permissionsData.find(r => r.id === userPermissions.userPermissionsData[i]);
     }
-
-    const userPermissionsNotAssignedObject = //sadrzi sve permisije koje nema taj user
+    let userPermissionsNotAssignedObject =
         permissions.permissionsData.filter(x => !userPermissionsAssignedObject.includes(x));
 
     useEffect(() => {
@@ -44,21 +44,28 @@ const AssignPermission = () => {
 
     useEffect(() => {
         dispatch(getUserPermissionsData(userParamId));
-    }, []);
+    }, [dispatch,userParamId]);
 
     function homeNavigate() {
         navigate("../");
     }
-
     function deletePermission(permissionId) {
-        const removedPermissionId = userPermissionsAssignedObject.findIndex((obj) => obj.id === permissionId);
-        userPermissionsAssignedObject.splice(removedPermissionId, 1);
+        //prima id permisije koja treba da se obrise
+        //trazi index iz niza objekata gde se id objekta i id permisije poklapaju
+        const permissionIdIndex = userPermissionsAssignedObject.findIndex((obj) => obj.id === permissionId);
+        //dodavanje obrisane permisije u userPermissionsNotAssignedObject koji ce se poslati u ViewPermissionsModal
+        userPermissionsNotAssignedObject.push(userPermissionsAssignedObject[permissionIdIndex]);
+        //brise objekat na toj poziciji iz niza
+        userPermissionsAssignedObject.splice(permissionIdIndex, 1);
+        //pomocna varijabla gde se dodaju svi id-jevi u niz koji su ostali
         const permissionsArray = userPermissionsAssignedObject.map(a => a.id);
+        //konstrukcija novog objekta za body koji prima api - dodaje niz updateovanih permisija za tog usera
         const result = {
             "permissionIds": permissionsArray
         };
         dispatch(updateUserPermissionsData(result, userParamId));
-        navigate(`../assign-permissions?id=` + userParamId);
+        dispatch(getUserPermissionsData(userParamId));
+        //navigate(`../`);
     }
 
     return (
@@ -74,7 +81,9 @@ const AssignPermission = () => {
                                 {permissionsForUserText} {userIdObject?.userName}</h2>
                         </div>
                         <div>
-                            <ViewPermissionsModal permissionProps={userPermissionsNotAssignedObject}/>
+                            <ViewPermissionsModal permissionsAssigned={userPermissionsAssignedObject}
+                                                  permissionsNotAssigned={userPermissionsNotAssignedObject}
+                                                  userId={userParamId}/>
                         </div>
                     </div>
                     <div>

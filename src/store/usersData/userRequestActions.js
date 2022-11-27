@@ -12,6 +12,18 @@ export const getUsersData = () => {
                 throw new Error(`${USERS_FETCH_ERROR}`);
             }
             const usersData = await response.json();
+            // const newUsersData = usersData.map((data) => {
+            //     return {
+            //         id: data.id,
+            //         firstName: data.firstName,
+            //         lastName: data.lastName,
+            //         userName: data.userName,
+            //         password: data.password,
+            //         email: data.email,
+            //         status: data.status,
+            //         permissions: data.permissions
+            //     };
+            // })
             dispatch(usersDataActions.setUsersData(usersData));
         };
         try {

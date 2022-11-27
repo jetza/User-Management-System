@@ -22,14 +22,13 @@ const UserList = () => {
 
     const state = useSelector( state => state.usersData);
     const [id, setId] = useState(null);
+    // TODO: FIX RENDER PAGE USING USECALLBACK
     // useCallback(
     //     () => {
     //         useSelector( state => state.usersData)
     //     },
     //     [input],
     // );
-
-
 
     const textsUserList = [
         firstNameText,
