@@ -19,11 +19,9 @@ const AssignPermission = () => {
     const state = useSelector( state => state.usersData);
     const permissions = useSelector(permission => permission.permissionsData);
     const userPermissions = useSelector(userPermission => userPermission.userPermissionsData);
+
     const dispatch = useDispatch();
     let navigate = useNavigate();
-
-    // const [userPermissionsAssigned, setUserPermissionsAssigned] = useState({});
-    // const [userPermissionsNotAssigned, setUserPermissionsNotAssigned] = useState({});
 
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
@@ -65,8 +63,9 @@ const AssignPermission = () => {
         };
         dispatch(updateUserPermissionsData(result, userParamId));
         dispatch(getUserPermissionsData(userParamId));
-        //navigate(`../`);
+        document.location.reload();
     }
+
 
     return (
         <div className="p-4 bg-gray-50">

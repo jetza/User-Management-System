@@ -44,6 +44,7 @@ const CreateUser = () => {
         };
         dispatch(createUserData(createdUser));
         navigate(`../`);
+        document.location.reload();
     }
 
     function statusSave(e){

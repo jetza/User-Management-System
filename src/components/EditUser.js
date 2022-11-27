@@ -57,6 +57,7 @@ const EditUser = () => {
         };
         dispatch(updateUserData(updatedUser, id));
         navigate("../");
+        document.location.reload();
     }
 
     function statusEdit(e){
@@ -101,7 +102,7 @@ const EditUser = () => {
                          </label>
                          <input
                              type="text"
-                             value={userIdObject.firstName}
+                             value={firstName}
                              onChange={(e) => setFirstName(e.target.value)}
                              className={inputClasses}
                          />
@@ -115,7 +116,7 @@ const EditUser = () => {
                          </label>
                          <input
                              type="text"
-                             value={userIdObject.lastName}
+                             value={lastName}
                              onChange={(e) => setLastName(e.target.value)}
                              className={inputClasses}
                          />
@@ -129,7 +130,7 @@ const EditUser = () => {
                          </label>
                          <input
                              type="email"
-                             value={userIdObject.email}
+                             value={email}
                              onChange={(e) => setEmail(e.target.value)}
                              className={inputClasses}
                          />

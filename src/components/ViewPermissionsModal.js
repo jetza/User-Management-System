@@ -33,7 +33,7 @@ const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, user
         dispatch(updateUserPermissionsData(result, userId));
         dispatch(getUserPermissionsData(userId));
         setShowModal(false);
-        navigate(`../assign-permissions?id=` + userId);
+        document.location.reload();
     }
 
     return (
