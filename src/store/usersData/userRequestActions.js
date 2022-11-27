@@ -94,7 +94,7 @@ export const createUserData = (createdUser) => {
                 body: JSON.stringify(createdUser)
 
             });
-            console.log("create user response",response)
+            console.log("create user response", response)
             if (!response.ok || response.status !== 200) {
                 throw new Error(`${UPDATE_USER_ERROR}`);
             }

@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {pinkButtonClasses} from "../constants/cssClasses";
 import {getPermissionsData} from "../store/permissionsData/permissionRequestActions.js";
 import {ArrowLeft} from "../constants/svgIcons";
 import ViewPermissionsModal from "./ViewPermissionsModal";
-import {getUserPermissionsData,
-        updateUserPermissionsData
+import {
+    getUserPermissionsData,
+    updateUserPermissionsData
 } from "../store/userPermissionsData/userPermissionsRequestActions.js";
-import {actionsText,
-        codeText, descriptionText,
-        permissionsForUserText,
-        removePermissionText,
+import {
+    actionsText,
+    codeText, descriptionText,
+    permissionsForUserText,
+    removePermissionText,
 } from "../constants/texts";
 
 const AssignPermission = () => {
 
-    const state = useSelector( state => state.usersData);
+    const state = useSelector(state => state.usersData);
     const permissions = useSelector(permission => permission.permissionsData);
     const userPermissions = useSelector(userPermission => userPermission.userPermissionsData);
 
@@ -29,7 +31,7 @@ const AssignPermission = () => {
     const userPermissionsLength = userPermissions.userPermissionsData.length;
     let userPermissionsAssignedObject = [];
 
-    for(let i = 0; i < userPermissionsLength; i++){
+    for (let i = 0; i < userPermissionsLength; i++) {
         userPermissionsAssignedObject[i] =
             permissions.permissionsData.find(r => r.id === userPermissions.userPermissionsData[i]);
     }
@@ -42,11 +44,12 @@ const AssignPermission = () => {
 
     useEffect(() => {
         dispatch(getUserPermissionsData(userParamId));
-    }, [dispatch,userParamId]);
+    }, [dispatch, userParamId]);
 
     function homeNavigate() {
         navigate("../");
     }
+
     function deletePermission(permissionId) {
         //prima id permisije koja treba da se obrise
         //trazi index iz niza objekata gde se id objekta i id permisije poklapaju
@@ -65,7 +68,6 @@ const AssignPermission = () => {
         dispatch(getUserPermissionsData(userParamId));
         document.location.reload();
     }
-
 
     return (
         <div className="p-4 bg-gray-50">
@@ -87,7 +89,8 @@ const AssignPermission = () => {
                     </div>
                     <div>
                         <div>
-                            <div className="flex grid grid-cols-3 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
+                            <div
+                                className="flex grid grid-cols-3 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
                                 <div>
                                     <span>{codeText}</span>
                                 </div>
@@ -99,11 +102,12 @@ const AssignPermission = () => {
                                 </div>
                             </div>
                             {userPermissionsAssignedObject && userPermissionsAssignedObject.map((permission) => {
-                                return <div className="flex grid grid-cols-3 text-sm text-indigo-700 text-xl font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
-                                    <div >
+                                return <div
+                                    className="flex grid grid-cols-3 text-sm text-indigo-700 text-xl font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
+                                    <div>
                                         {permission?.code}
                                     </div>
-                                    <div >
+                                    <div>
                                         {permission?.description}
                                     </div>
                                     <div>

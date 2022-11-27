@@ -2,18 +2,20 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {createUserData} from "../store/usersData/userRequestActions";
-import {inputClasses,
-        saveDisabledFormButtonClasses,
-        saveFormButtonClasses
+import {
+    inputClasses,
+    saveDisabledFormButtonClasses,
+    saveFormButtonClasses
 } from "../constants/cssClasses.js";
-import {createUserText,
-        firstNameText,
-        lastNameText,
-        userNameText,
-        passwordText,
-        emailText,
-        statusText,
-        saveText
+import {
+    createUserText,
+    firstNameText,
+    lastNameText,
+    userNameText,
+    passwordText,
+    emailText,
+    statusText,
+    saveText
 } from "../constants/texts.js";
 
 const CreateUser = () => {
@@ -47,10 +49,10 @@ const CreateUser = () => {
         document.location.reload();
     }
 
-    function statusSave(e){
-        if(e.target.value === "1")
+    function statusSave(e) {
+        if (e.target.value === "1")
             setStatus("Active");
-        else if(e.target.value === "0")
+        else if (e.target.value === "0")
             setStatus("Not Active");
         else
             setStatus("");
@@ -65,8 +67,9 @@ const CreateUser = () => {
                         type="button"
                         onClick={homeNavigate}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                             stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
                         </svg>
 
                     </button>
@@ -150,7 +153,8 @@ const CreateUser = () => {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
-                            {statusText}{status === ""?(<span className="text-red-500">[Enter 1 or 0]</span>): <span></span>}
+                            {statusText}{status === "" ? (<span className="text-red-500">[Enter 1 or 0]</span>) :
+                            <span></span>}
                         </label>
                         <input
                             type="text"
@@ -161,7 +165,7 @@ const CreateUser = () => {
                     </div>
                     <div className="mt-6">
                         <button
-                            className={status === ""?saveDisabledFormButtonClasses: saveFormButtonClasses}
+                            className={status === "" ? saveDisabledFormButtonClasses : saveFormButtonClasses}
                             disabled={status === ""}
                             type="submit"
                             onClick={saveCreatedUser}>

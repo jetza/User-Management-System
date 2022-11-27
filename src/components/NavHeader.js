@@ -11,6 +11,7 @@ const NavHeader = () => {
     function homeNavigate() {
         navigate("../");
     }
+
     function createUserNavigate() {
         navigate("../create-user");
     }
@@ -38,13 +39,13 @@ const NavHeader = () => {
 
                     <div className="flex items-center space-x-2">
                         <div>
-                                <button
-                                    className={pinkButtonClasses}
-                                    type="button"
-                                    onClick={createUserNavigate}
-                                >
-                                    {createText}
-                                </button>
+                            <button
+                                className={pinkButtonClasses}
+                                type="button"
+                                onClick={createUserNavigate}
+                            >
+                                {createText}
+                            </button>
 
                         </div>
                     </div>
