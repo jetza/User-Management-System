@@ -16,7 +16,6 @@ import {
     saveText
 } from "../constants/texts.js";
 import {ArrowLeft} from "../constants/svgIcons";
-import {usersDataActions} from "../store/usersData";
 
 const EditUser = () => {
     //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL

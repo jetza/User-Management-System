@@ -3,9 +3,10 @@ import {useNavigate} from "react-router-dom";
 import {getUsersData} from "../store/usersData/userRequestActions";
 import {useDispatch, useSelector} from "react-redux";
 import DeleteModal from "./DeleteModal";
+import Pagination from "./Pagination";
 import {pinkButtonClasses} from "../constants/cssClasses.js";
 import {
-    assignText,
+    assignText, createText,
     deleteText,
     editText,
     emailText,
@@ -74,7 +75,6 @@ const UserList = () => {
         return dispatch(usersDataActions.setUsersData(sortedAsc));
     }
 
-
     function orderDescending(e, desc) {
         let sortedDesc = [];
         switch(desc) {
@@ -92,17 +92,31 @@ const UserList = () => {
                 break;
             default:
                 sortedDesc = state.usersData
-        }console.log(sortedDesc)
+        }
         return dispatch(usersDataActions.setUsersData(sortedDesc));
-
+    }
+    function createUserNavigate() {
+        navigate("../create-user");
     }
 
-    //TODO FILTER, ORDER, PAGINATION, SPINNER
+    //TODO FILTER, PAGINATION, SPINNER
     return (
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-4 rounded-md">
                 <div>
-                    <h2 className="mb-5 text-3xl ml-4 font-bold text-indigo-700">{usersText}</h2>
+                    <div className="flex justify-between items-center p-4 b">
+                        <h2 className="mb-5 text-3xl ml-4 font-bold text-indigo-700">{usersText}</h2>
+                        <div className="flex items-center space-x-2">
+                            <button
+                                className={pinkButtonClasses}
+                                type="button"
+                                onClick={createUserNavigate}
+                            >
+                                {createText}
+                            </button>
+                        </div>
+                    </div>
+
                     <div>
                         <div>
                             <div className="flex grid grid-cols-9 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
@@ -169,6 +183,7 @@ const UserList = () => {
                             })}
                         </div>
                     </div>
+                    <Pagination/>
                 </div>
             </div>
         </div>
