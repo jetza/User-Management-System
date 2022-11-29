@@ -3,10 +3,16 @@ import {useNavigate} from "react-router-dom";
 import {getUsersData} from "../store/usersData/userRequestActions";
 import {useDispatch, useSelector} from "react-redux";
 import DeleteModal from "./DeleteModal";
-import Pagination from "./Pagination";
-import {pinkButtonClasses} from "../constants/cssClasses.js";
+import {usersDataActions} from "../store/usersData";
 import {
-    assignText, createText,
+    pagingArrowsClasses,
+    pagingArrowsDisabledClasses,
+    pagingNumbersClasses,
+    pinkButtonClasses
+} from "../constants/cssClasses.js";
+import {
+    assignText,
+    createText,
     deleteText,
     editText,
     emailText,
@@ -17,7 +23,7 @@ import {
     userNameText,
     usersText,
 } from "../constants/texts.js";
-import {usersDataActions} from "../store/usersData";
+
 
 const UserList = () => {
 
@@ -41,11 +47,28 @@ const UserList = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
+    //pagination
+    const [number, setNumber] = useState(1); // No of pages
+    const [postPerPage] = useState(5);
+    const lastPost = number * postPerPage;
+    const firstPost = lastPost - postPerPage;
+    const currentPost = state.usersData.slice(firstPost, lastPost);
+    let pageNumber = [];
+
+    const[disableLButton, setDisableLButton] = useState(false);
+    const[disableRButton, setDisableRButton] = useState(false);
+
+    for (let i = 1; i <= Math.ceil(state.usersData.length / postPerPage); i++) {
+        pageNumber.push(i);
+    }
+    const ChangePage = (pageNumber) => {
+        setNumber(pageNumber);
+    };
+    //pagination
     const editUserNavigate = (userId) => {
         setId(userId);
         navigate(`../edit-user?id=` + userId);
     }
-
     useEffect(() => {
         dispatch(getUsersData());
     }, [dispatch, id]);
@@ -53,7 +76,6 @@ const UserList = () => {
     function assignPermissionNavigate(userId) {
         navigate(`../assign-permissions?id=` + userId);
     }
-
     const orderAscending = (e, asc) => {
         let sortedAsc = [];
         switch(asc) {
@@ -98,8 +120,20 @@ const UserList = () => {
     function createUserNavigate() {
         navigate("../create-user");
     }
+    function paginateLeft() {
+        setNumber(number - 1)
+    }
+    function paginateRight() {
+        setNumber(number + 1)
+    }
 
-    //TODO FILTER, PAGINATION, SPINNER
+    useEffect(() => {
+        (number+1 > pageNumber.length)? setDisableRButton(true): setDisableRButton(false);
+        (number+1 < pageNumber.length)? setDisableLButton(true): setDisableLButton(false);
+    }, [number, pageNumber.length]);
+
+
+    //TODO FILTER, SPINNER
     return (
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-4 rounded-md">
@@ -110,13 +144,11 @@ const UserList = () => {
                             <button
                                 className={pinkButtonClasses}
                                 type="button"
-                                onClick={createUserNavigate}
-                            >
+                                onClick={createUserNavigate}>
                                 {createText}
                             </button>
                         </div>
                     </div>
-
                     <div>
                         <div>
                             <div className="flex grid grid-cols-9 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
@@ -135,29 +167,17 @@ const UserList = () => {
                                     <span className="pt-3">{text}</span>
                                 </div>})}
                             </div>
-                            {state.usersData && state.usersData.map((user) => {
+                            {currentPost && currentPost.map((user) => {
                                 return <div
                                     className="flex grid grid-cols-9 text-sm text-indigo-700 text-ll font-bold  mt-4 py-2 border-t-2 px-4 border-gray-100">
-                                    <div>
-                                        {user?.firstName}
-                                    </div>
-                                    <div>
-                                        {user?.lastName}
-                                    </div>
-                                    <div>
-                                        {user?.userName}
-                                    </div>
-                                    <div>
-                                        {user?.email}
-                                    </div>
+                                    <div>{user?.firstName}</div>
+                                    <div>{user?.lastName}</div>
+                                    <div>{user?.userName}</div>
+                                    <div>{user?.email} </div>
                                     <div className="grid-cols-2 flex gap-4 justify-between pr-5">
-                                        <div>
-                                            {(user?.password).replace(/./g, '*')}
-                                        </div>
+                                        <div>{(user?.password).replace(/./g, '*')}</div>
                                     </div>
-                                    <div>
-                                        {(user.status === true) ? "Active" : "Not Active"}
-                                    </div>
+                                    <div>{(user.status === true) ? "Active" : "Not Active"}</div>
                                     <div>
                                         <button
                                             className={pinkButtonClasses}
@@ -183,7 +203,32 @@ const UserList = () => {
                             })}
                         </div>
                     </div>
-                    <Pagination/>
+                    {/*pagination*/}
+                    <div className="my-3 text-center">
+                        <button
+                            className={disableLButton?pagingArrowsDisabledClasses:pagingArrowsClasses}
+                            onClick={paginateLeft}
+                            disabled={disableLButton}>ᐊ
+                        </button>
+
+                        {pageNumber.map((el) => {
+                            return (
+                                <>
+                                    <button
+                                        className={pagingNumbersClasses}
+                                        onClick={() => ChangePage(el)}>
+                                        {el}
+                                    </button>
+                                </>
+                            );
+                        })}
+                        <button
+                            className={disableRButton?pagingArrowsDisabledClasses:pagingArrowsClasses}
+                            onClick={paginateRight}
+                            disabled={disableRButton}>ᐅ
+                        </button>
+                    </div>
+                    {/*pagination*/}
                 </div>
             </div>
         </div>
