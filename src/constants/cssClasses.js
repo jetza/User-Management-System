@@ -15,4 +15,4 @@ export const pagingArrowsClasses = "first:ml-0 text-xs font-semibold w-8 h-8 mx-
 export const pagingArrowsDisabledClasses = "first:ml-0 text-xs font-semibold w-8 h-8 mx-1 p-0 rounded-full items-center " +
     "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-300 text-white";
 export const pagingNumbersClasses = "first:ml-0 text-xs font-semibold w-8 h-8 mx-1 p-0 rounded-full items-center " +
-    "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-300 text-white";
+    "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-500 text-white";

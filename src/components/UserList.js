@@ -23,13 +23,10 @@ import {
     userNameText,
     usersText,
 } from "../constants/texts.js";
-
+//TODO FILTER, SPINNER
+// TODO: FIX RENDER PAGE ISSUE USING USECALLBACK INSTEAD OF document.location.reload();
 
 const UserList = () => {
-
-    const state = useSelector(state => state.usersData);
-    const [id, setId] = useState(null);
-    // TODO: FIX RENDER PAGE ISSUE USING USECALLBACK INSTEAD OF document.location.reload();
 
     const textsUserListSort = [
         firstNameText,
@@ -44,27 +41,13 @@ const UserList = () => {
         assignText,
         deleteText
     ];
+
+    //user edit, assign, sort
+    const state = useSelector(state => state.usersData);
+    const [id, setId] = useState(null);
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    //pagination
-    const [number, setNumber] = useState(1); // No of pages
-    const [postPerPage] = useState(5);
-    const lastPost = number * postPerPage;
-    const firstPost = lastPost - postPerPage;
-    const currentPost = state.usersData.slice(firstPost, lastPost);
-    let pageNumber = [];
-
-    const[disableLButton, setDisableLButton] = useState(false);
-    const[disableRButton, setDisableRButton] = useState(false);
-
-    for (let i = 1; i <= Math.ceil(state.usersData.length / postPerPage); i++) {
-        pageNumber.push(i);
-    }
-    const ChangePage = (pageNumber) => {
-        setNumber(pageNumber);
-    };
-    //pagination
     const editUserNavigate = (userId) => {
         setId(userId);
         navigate(`../edit-user?id=` + userId);
@@ -76,7 +59,43 @@ const UserList = () => {
     function assignPermissionNavigate(userId) {
         navigate(`../assign-permissions?id=` + userId);
     }
-    const orderAscending = (e, asc) => {
+    function createUserNavigate() {
+        navigate("../create-user");
+    }
+    //end user edit, assign, sort
+
+    //pagination
+    const [number, setNumber] = useState(1); // No of pages
+    const [postPerPage] = useState(5);
+    const [disableLButton, setDisableLButton] = useState(false);
+    const [disableRButton, setDisableRButton] = useState(false);
+    const lastPost = number * postPerPage;
+    const firstPost = lastPost - postPerPage;
+    const currentPost = state.usersData.slice(firstPost, lastPost);
+    let pageNumber = [];
+
+    for (let i = 1; i <= Math.ceil(state.usersData.length / postPerPage); i++) {
+        pageNumber.push(i);
+    }
+    const ChangePage = (pageNumber) => {
+        setNumber(pageNumber);
+    };
+    function paginateLeft() {
+        setNumber(number - 1)
+    }
+    function paginateRight() {
+        setNumber(number + 1)
+    }
+
+    useEffect(() => {
+        (number+1 > pageNumber.length)? setDisableRButton(true): setDisableRButton(false);
+        (number+1 < pageNumber.length)? setDisableLButton(true): setDisableLButton(false);
+    }, [number, pageNumber.length]);
+    //end pagination
+
+    //ordering
+    //TODO DON'T LIKE THIS!!!
+    const orderAscending = (asc) => {
         let sortedAsc = [];
         switch(asc) {
             case (1):
@@ -97,7 +116,7 @@ const UserList = () => {
         return dispatch(usersDataActions.setUsersData(sortedAsc));
     }
 
-    function orderDescending(e, desc) {
+    function orderDescending(desc) {
         let sortedDesc = [];
         switch(desc) {
             case (1):
@@ -117,23 +136,8 @@ const UserList = () => {
         }
         return dispatch(usersDataActions.setUsersData(sortedDesc));
     }
-    function createUserNavigate() {
-        navigate("../create-user");
-    }
-    function paginateLeft() {
-        setNumber(number - 1)
-    }
-    function paginateRight() {
-        setNumber(number + 1)
-    }
+    //end ordering
 
-    useEffect(() => {
-        (number+1 > pageNumber.length)? setDisableRButton(true): setDisableRButton(false);
-        (number+1 < pageNumber.length)? setDisableLButton(true): setDisableLButton(false);
-    }, [number, pageNumber.length]);
-
-
-    //TODO FILTER, SPINNER
     return (
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-4 rounded-md">
@@ -157,8 +161,8 @@ const UserList = () => {
                                                 id={(value+1).toString()} >
                                         <span className="pt-3">{text}</span>
                                         <div className="flex-col flex justify-between">
-                                            <button id="asc" onClick={(e) => orderAscending(e, value+1)}>▲</button>
-                                            <button id="desc" onClick={(e) => orderDescending(e, value+1)}>▼</button>
+                                            <button id="asc" onClick={(e) => orderAscending(value+1)}>▲</button>
+                                            <button id="desc" onClick={(e) => orderDescending(value+1)}>▼</button>
                                         </div>
                                     </div>
                                 })}
