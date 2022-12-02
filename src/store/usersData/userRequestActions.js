@@ -1,10 +1,12 @@
 import {USERS_FETCH_ERROR, DELETE_USER_ERROR, UPDATE_USER_ERROR} from "../../constants/apiMessages";
 import {usersDataActions} from "./index";
+import {uiActions} from "../ui";
 
 
 export const getUsersData = () => {
     return async dispatch => {
         const fetchUsersData = async () => {
+            dispatch(uiActions.setIsLoading(true));
             const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users`, {
                 method: 'GET'
             });
@@ -25,11 +27,13 @@ export const getUsersData = () => {
             //     };
             // })
             dispatch(usersDataActions.setUsersData(usersData));
+            dispatch(uiActions.setIsLoading(false));
         };
         try {
             await fetchUsersData();
         } catch (e) {
             console.log(e);
+            dispatch(uiActions.setIsLoading(false));
         }
     };
 };

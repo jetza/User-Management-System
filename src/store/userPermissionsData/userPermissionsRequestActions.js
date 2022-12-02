@@ -2,12 +2,14 @@ import {USER_PERMISSIONS_FETCH_ERROR,
         UPDATE_USER_PERMISSIONS_ERROR
 } from "../../constants/apiMessages";
 import {userPermissionsDataActions} from "./index";
+import {uiActions} from "../ui";
 
 
 export const getUserPermissionsData = id => {
 
     return async dispatch => {
         const fetchUserPermissionsData = async () => {
+            dispatch(uiActions.setIsLoading(true));
             const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}User/${id}/Permissions`, {
                 method: 'GET'
             });
@@ -16,11 +18,13 @@ export const getUserPermissionsData = id => {
             }
             const userPermissionsData = await response.json();
             dispatch(userPermissionsDataActions.setUserPermissionsData(userPermissionsData));
+            dispatch(uiActions.setIsLoading(false));
         };
         try {
             await fetchUserPermissionsData();
         } catch (e) {
             console.log(e);
+            dispatch(uiActions.setIsLoading(false));
         }
     };
 };
