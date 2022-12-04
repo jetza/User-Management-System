@@ -8,6 +8,7 @@ const Search = () => {
     const state = useSelector(state => state.usersData);
     const [inputText, setInputText] = useState("");
 
+    //find a value in array of objects and set it in array variable
     const inputHandler = () => {
         let array = [];
         array.push(state.usersData.filter
