@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
@@ -30,30 +30,33 @@ const EditUser = () => {
 
     const displayStatus = ((userIdObject?.status.toString()) === "true") ? "Active" : "Not Active";
 
-    const [id, setId] = useState(userParamId);
+    const [id] = useState(userParamId);
     const [firstName, setFirstName] = useState(userIdObject.firstName);
     const [lastName, setLastName] = useState(userIdObject.lastName);
     const [email, setEmail] = useState(userIdObject.email);
     const [statusName, setStatusName] = useState(displayStatus);
     const [status, setStatus] = useState(false);
+    const [user, setUser] = useState("");
 
-    function homeNavigate() {
+
+    const homeNavigate = () => {
         navigate(-1);
     }
 
-    function saveEditedUser(id) {
+    const saveEditedUser = (id) => {
         const updatedUser = {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            status: status
-        };
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                status: status
+            };
+        setUser(updatedUser);
         dispatch(updateUserData(updatedUser, id));
         navigate("../");
-        document.location.reload();
+        //
+        // document.location.reload();
     }
-
-    function statusEdit(e) {
+    const statusEdit = (e) => {
         if (e.target.value === "1") {
             setStatus(true);
             setStatusName("Active");
@@ -63,6 +66,11 @@ const EditUser = () => {
         } else
             setStatusName("");
     }
+
+    useLayoutEffect(() => {
+        console.log(user)
+    }, [user]);
+
 
     return (
 

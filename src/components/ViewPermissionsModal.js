@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {pinkButtonClasses} from "../constants/cssClasses.js";
 import {
@@ -19,10 +19,12 @@ const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, user
 
     //TODO FIX PERMISSIONS MODAL TO LOOK NORMAL
     //TODO: fix when deleting permission getUserPermissionsData not updating userpermissions state
+    //TODO: check line 28
+    //TODO: when add or remove permission second permission needs to be added 2 times
 
     const permissionLength = permissionsNotAssigned.length;
 
-    function assignPermission(permissionId) {
+    const assignPermission = (permissionId) => {
         const permissionIdIndexToBeDeleted = permissionsNotAssigned.findIndex((obj) => obj.id === permissionId);
         permissionsAssigned.push(permissionsNotAssigned[permissionIdIndexToBeDeleted]);
         permissionsNotAssigned.splice(permissionIdIndexToBeDeleted, 1);
@@ -30,11 +32,18 @@ const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, user
         const result = {
             "permissionIds": permissionsArray
         };
+
         dispatch(updateUserPermissionsData(result, userId));
         dispatch(getUserPermissionsData(userId));
         setShowModal(false);
-        document.location.reload();
     }
+
+    useEffect(() => {
+        if(showModal === false){
+            dispatch(getUserPermissionsData(userId));
+        }
+    }, [dispatch, userId, showModal]);
+
 
     return (
         <>

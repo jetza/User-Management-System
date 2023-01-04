@@ -13,7 +13,7 @@ const NavHeader = () => {
 
     let navigate = useNavigate();
 
-    function homeNavigate() {
+    const homeNavigate = () => {
         navigate("../");
     }
     return (

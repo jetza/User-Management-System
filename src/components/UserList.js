@@ -34,6 +34,7 @@ const UserList = () => {
         userNameText,
         emailText,
     ];
+
     const textsUserList = [
         passwordText,
         statusText,
@@ -43,7 +44,7 @@ const UserList = () => {
     ];
 
     //user edit, assign, sort
-    const state = useSelector(state => state.usersData);
+    const state = useSelector(state => state?.usersData);
     const [id, setId] = useState(null);
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -56,10 +57,10 @@ const UserList = () => {
         dispatch(getUsersData());
     }, [dispatch, id]);
 
-    function assignPermissionNavigate(userId) {
+    const assignPermissionNavigate = (userId) => {
         navigate(`../assign-permissions?id=` + userId);
     }
-    function createUserNavigate() {
+    const createUserNavigate = () => {
         navigate("../create-user");
     }
     //end user edit, assign, sort
@@ -80,10 +81,10 @@ const UserList = () => {
     const ChangePage = (pageNumber) => {
         setNumber(pageNumber);
     };
-    function paginateLeft() {
+    const paginateLeft = () => {
         setNumber(number - 1)
     }
-    function paginateRight() {
+    const paginateRight = () => {
         setNumber(number + 1)
     }
 
@@ -116,7 +117,7 @@ const UserList = () => {
         return dispatch(usersDataActions.setUsersData(sortedAsc));
     }
 
-    function orderDescending(desc) {
+    const orderDescending = (desc) => {
         let sortedDesc = [];
         switch(desc) {
             case (1):

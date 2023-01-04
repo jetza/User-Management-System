@@ -18,9 +18,9 @@ import {
 
 const AssignPermission = () => {
 
-    const state = useSelector(state => state.usersData);
-    const permissions = useSelector(permission => permission.permissionsData);
-    const userPermissions = useSelector(userPermission => userPermission.userPermissionsData);
+    const state = useSelector(state => state?.usersData);
+    const permissions = useSelector(permission => permission?.permissionsData);
+    const userPermissions = useSelector(userPermission => userPermission?.userPermissionsData);
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -38,6 +38,10 @@ const AssignPermission = () => {
     let userPermissionsNotAssignedObject =
         permissions.permissionsData.filter(x => !userPermissionsAssignedObject.includes(x));
 
+    const homeNavigate = () => {
+        navigate("../");
+    }
+
     useEffect(() => {
         dispatch(getPermissionsData());
     }, [dispatch]);
@@ -46,11 +50,7 @@ const AssignPermission = () => {
         dispatch(getUserPermissionsData(userParamId));
     }, [dispatch, userParamId]);
 
-    function homeNavigate() {
-        navigate("../");
-    }
-
-    function deletePermission(permissionId) {
+    const deletePermission = (permissionId) => {
         //prima id permisije koja treba da se obrise
         //trazi index iz niza objekata gde se id objekta i id permisije poklapaju
         const permissionIdIndex = userPermissionsAssignedObject.findIndex((obj) => obj.id === permissionId);
@@ -66,6 +66,7 @@ const AssignPermission = () => {
         };
         dispatch(updateUserPermissionsData(result, userParamId));
         dispatch(getUserPermissionsData(userParamId));
+        //TODO: rerender
         document.location.reload();
     }
 

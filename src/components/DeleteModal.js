@@ -14,7 +14,7 @@ const DeleteModal = ({id}) => {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
 
-    function deleteUser() {
+    const deleteUser = () => {
         setShowModal(false);
         dispatch(deleteUserData(id));
     }
