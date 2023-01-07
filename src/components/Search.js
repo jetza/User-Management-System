@@ -3,6 +3,7 @@ import {SearchIcon} from "../constants/svgIcons";
 import {useSelector} from "react-redux";
 
 //TODO: finish components functionality
+//has to be visible only on main page
 const Search = () => {
 
     const state = useSelector(state => state.usersData);
