@@ -66,8 +66,6 @@ const AssignPermission = () => {
         };
         dispatch(updateUserPermissionsData(result, userParamId));
         dispatch(getUserPermissionsData(userParamId));
-        //TODO: rerender
-        document.location.reload();
     }
 
     return (

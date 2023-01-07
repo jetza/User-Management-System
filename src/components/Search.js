@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {SearchIcon} from "../constants/svgIcons";
 import {useSelector} from "react-redux";
 
-
+//TODO: finish components functionality
 const Search = () => {
 
     const state = useSelector(state => state.usersData);

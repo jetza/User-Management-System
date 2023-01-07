@@ -2,10 +2,12 @@ import {USERS_FETCH_ERROR, DELETE_USER_ERROR, UPDATE_USER_ERROR, CREATE_USER_ERR
 import {usersDataActions} from "./index";
 import {uiActions} from "../ui";
 
-
 export const getUsersData = () => {
     return async dispatch => {
         const fetchUsersData = async () => {
+            //TODO: add offline alert with notifications
+            // if(navigator.onLine === false)
+            //     alert("error");
             dispatch(uiActions.setIsLoading(true));
             const response = await fetch(`${process.env.REACT_APP_LOCAL_API_URL}Users`, {
                 method: 'GET'

@@ -18,9 +18,8 @@ const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, user
     const dispatch = useDispatch();
 
     //TODO FIX PERMISSIONS MODAL TO LOOK NORMAL
-    //TODO: fix when deleting permission getUserPermissionsData not updating userpermissions state
     //TODO: check line 28
-    //TODO: when add or remove permission second permission needs to be added 2 times
+    //NOTE: assign is working but when you add permission slowly
 
     const permissionLength = permissionsNotAssigned.length;
 

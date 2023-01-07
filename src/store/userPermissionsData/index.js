@@ -12,7 +12,7 @@ const userPermissionsDataSlice = createSlice({
             state.userPermissionsData = action.payload;
         },
         updateUserPermissionsData(state, action) {
-            const userPermissionsId = action.payload;
+            state.userPermissionsData = action.payload;
 
         }
     }

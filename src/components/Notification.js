@@ -1,6 +1,7 @@
 import React from 'react';
 import {CheckIcon} from "../constants/svgIcons";
 
+//TODO: finish components functionality
 const Notification  = () => {
     return (
         <>
