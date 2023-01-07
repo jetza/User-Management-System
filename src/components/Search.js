@@ -3,6 +3,7 @@ import {SearchIcon} from "../constants/svgIcons";
 import {useSelector} from "react-redux";
 
 //TODO: finish components functionality
+//https://dev.to/salehmubashar/search-bar-in-react-js-545l
 //has to be visible only on main page
 const Search = () => {
 

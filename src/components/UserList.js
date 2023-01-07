@@ -23,7 +23,7 @@ import {
     userNameText,
     usersText,
 } from "../constants/texts.js";
-//TODO: FILTER, pagination left disable when on first page
+
 //TODO: MOVE PAGINATION IN SEPARATE COMPONENT
 
 const UserList = () => {
@@ -94,8 +94,10 @@ const UserList = () => {
 
     useEffect(() => {
         (number+1 > pageNumber.length)? setDisableRButton(true): setDisableRButton(false);
-        (number+1 < pageNumber.length)? setDisableLButton(true): setDisableLButton(false);
+        (number < pageNumber.length)? setDisableLButton(true): setDisableLButton(false);
     }, [number, pageNumber.length]);
+
+    console.log(number)
     //end pagination
 
     //ordering
@@ -237,7 +239,7 @@ const UserList = () => {
                             disabled={disableRButton}>ᐅ
                         </button>
                     </div>
-                    {/*pagination*/}
+                    {/*end pagination*/}
                 </div>
             </div>
         </div>

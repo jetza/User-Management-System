@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useNavigate} from "react-router-dom";
 import {Home} from "../constants/svgIcons";
 import Search from "./Search";
-import {useSelector} from "react-redux";
-import Notification from "./Notification";
+//import {useSelector} from "react-redux";
+//import Notification from "./Notification";
 
 const NavHeader = () => {
 
-    const [notification, setNotification] = useState({});
-    const showNotification = useSelector((state) => state.ui.showNotification);
+    // const [notification, setNotification] = useState({});
+    // const showNotification = useSelector((state) => state.ui.showNotification);
 
 
     let navigate = useNavigate();
@@ -33,7 +33,7 @@ const NavHeader = () => {
                             </div>
                         </div>
                         <h2 className=" mb-4 text-3xl font-bold ml-4 text-indigo-700">User Management System</h2>
-                        <Notification/>
+                        {/*<Notification/>*/}
                     </div>
                     <div className="flex items-center space-x-2">
                         <Search/>

@@ -15,8 +15,9 @@ export const pinkButtonClasses = "bg-pink-500 text-white active:bg-pink-600 font
 export const arrowButtonClasses = "text-violet-700 font-bold justify-center pb-3 mr-3";
 
 export const pagingArrowsClasses = "first:ml-0 text-xs font-semi-bold w-8 h-8 mx-1 p-0 rounded-full items-center " +
-    "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-500 text-white";
+    "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-500 text-white active:bg-violet-700";
 export const pagingArrowsDisabledClasses = "first:ml-0 text-xs font-semi-bold w-8 h-8 mx-1 p-0 rounded-full items-center " +
     "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-300 text-white";
 export const pagingNumbersClasses = "first:ml-0 text-xs font-semi-bold w-8 h-8 mx-1 p-0 rounded-full items-center " +
-    "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-500 text-white";
+    "justify-center leading-tight relative border border-solid border-pink-500 bg-pink-500 text-white " +
+    "active:bg-violet-700 focus:ring focus:ring-violet-300";
