@@ -13,13 +13,11 @@ import {
     updateUserPermissionsData
 } from "../store/userPermissionsData/userPermissionsRequestActions";
 
-const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, userId}) => {
+const AddPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, userId}) => {
     const [showModal, setShowModal] = useState(false);
     const dispatch = useDispatch();
 
-    //TODO FIX PERMISSIONS MODAL TO LOOK NORMAL
-    //TODO: check line 28
-    //NOTE: assign is working but when you add permission slowly
+    // ! NOTE: assign is working but when you add permission slowly
 
     const permissionLength = permissionsNotAssigned.length;
 
@@ -125,4 +123,4 @@ const ViewPermissionsModal = ({permissionsAssigned, permissionsNotAssigned, user
     );
 };
 
-export default ViewPermissionsModal;
+export default AddPermissionsModal;

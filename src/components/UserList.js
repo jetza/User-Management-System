@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {getUsersData} from "../store/usersData/userRequestActions";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import DeleteModal from "./DeleteModal";
-import usersData, {usersDataActions} from "../store/usersData";
+import {usersDataActions} from "../store/usersData";
 import {
     pagingArrowsClasses,
     pagingArrowsDisabledClasses,
@@ -23,8 +23,8 @@ import {
     userNameText,
     usersText,
 } from "../constants/texts.js";
-//TODO FILTER, SPINNER
-// TODO: FIX RENDER PAGE ISSUE USING USECALLBACK INSTEAD OF document.location.reload();
+//TODO: FILTER, pagination left disable when on first page
+//TODO: MOVE PAGINATION IN SEPARATE COMPONENT
 
 const UserList = () => {
 
@@ -45,12 +45,10 @@ const UserList = () => {
 
     //user edit, assign, sort
     const state = useSelector(state => state?.usersData, shallowEqual);
-    const [id, setId] = useState(null);
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
     const editUserNavigate = (userId) => {
-        setId(userId);
         navigate(`../edit-user?id=` + userId);
     }
     useEffect(() => {
@@ -149,7 +147,7 @@ const UserList = () => {
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-4 rounded-md">
                 <div>
-                    <div className="flex justify-between items-center p-4 b">
+                    <div className="flex justify-between items-center pl-8 pt-4 pb-4">
                         <h2 className="mb-5 text-3xl ml-4 font-bold text-indigo-700">{usersText}</h2>
                         <div className="flex items-center space-x-2">
                             <button

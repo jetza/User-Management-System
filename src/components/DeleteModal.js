@@ -9,6 +9,7 @@ import {
     deleteText
 } from "../constants/texts"
 
+//TODO: close modal when clicked outside
 const DeleteModal = ({id}) => {
 
     const dispatch = useDispatch();
@@ -55,13 +56,12 @@ const DeleteModal = ({id}) => {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
-                                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                                    <p className="my-4 text-lg leading-relaxed font-bold text-indigo-700">
                                         {questionDeleteUserText}
                                     </p>
                                 </div>
                                 {/*footer*/}
-                                <div
-                                    className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                                <div className="flex items-center justify-end p-6 border-t border-solid gap-4 border-slate-200 rounded-b">
                                     <button
                                         className="bg-white text-indigo-700 active:bg-gray-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"

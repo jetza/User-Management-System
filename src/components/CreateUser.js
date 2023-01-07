@@ -3,7 +3,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {createUserData, getUsersData} from "../store/usersData/userRequestActions";
 import {
-    inputClasses,
+    arrowButtonClasses,
+    inputClasses, labelClasses,
     saveDisabledFormButtonClasses,
     saveFormButtonClasses
 } from "../constants/cssClasses.js";
@@ -17,6 +18,7 @@ import {
     statusText,
     saveText
 } from "../constants/texts.js";
+import {ArrowLeft} from "../constants/svgIcons";
 
 const CreateUser = () => {
 //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
@@ -61,18 +63,15 @@ const CreateUser = () => {
     return (
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-1 rounded-md">
-                <div className="flex items-center space-x-2 items-baseline ml-4">
+                <div className="flex items-center space-x-2 items-baseline pt-7 ml-4">
                     <button
-                        className="text-violet-700 font-bold justify-center pb-3 mr-3"
+                        className={arrowButtonClasses}
                         type="button"
                         onClick={homeNavigate}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                             stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
-                        </svg>
+                        <ArrowLeft/>
                     </button>
-                    <h1 className="text-3xl font-semibold text-indigo-700 ml-10">
+                    <h1 className="text-3xl font-bold text-indigo-700 ml-10">
                         {createUserText}
                     </h1>
                 </div>
@@ -80,7 +79,7 @@ const CreateUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {firstNameText}
                         </label>
@@ -94,7 +93,7 @@ const CreateUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {lastNameText}
                         </label>
@@ -108,7 +107,7 @@ const CreateUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {userNameText}
                         </label>
@@ -122,7 +121,7 @@ const CreateUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="password"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {passwordText}
                         </label>
@@ -136,7 +135,7 @@ const CreateUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {emailText}
                         </label>
@@ -150,7 +149,7 @@ const CreateUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {statusText}{status === "" ? (<span className="text-red-500">[Enter 1 or 0]</span>) :
                             <span></span>}

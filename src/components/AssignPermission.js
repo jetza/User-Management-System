@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {pinkButtonClasses} from "../constants/cssClasses";
+import {arrowButtonClasses, pinkButtonClasses} from "../constants/cssClasses";
 import {getPermissionsData} from "../store/permissionsData/permissionRequestActions.js";
 import {ArrowLeft} from "../constants/svgIcons";
-import ViewPermissionsModal from "./ViewPermissionsModal";
+import AddPermissionsModal from "./AddPermissionsModal";
 import {
     getUserPermissionsData,
     updateUserPermissionsData
@@ -54,7 +54,7 @@ const AssignPermission = () => {
         //prima id permisije koja treba da se obrise
         //trazi index iz niza objekata gde se id objekta i id permisije poklapaju
         const permissionIdIndex = userPermissionsAssignedObject.findIndex((obj) => obj.id === permissionId);
-        //dodavanje obrisane permisije u userPermissionsNotAssignedObject koji ce se poslati u ViewPermissionsModal
+        //dodavanje obrisane permisije u userPermissionsNotAssignedObject koji ce se poslati u AddPermissionsModal
         userPermissionsNotAssignedObject.push(userPermissionsAssignedObject[permissionIdIndex]);
         //brise objekat na toj poziciji iz niza
         userPermissionsAssignedObject.splice(permissionIdIndex, 1);
@@ -72,16 +72,17 @@ const AssignPermission = () => {
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-4 rounded-md">
                 <div>
-                    <div className="grid-cols-2 flex justify-between mb-5 text-3xl ml-4 font-bold text-indigo-700">
-                        <div className="grid-cols-2 flex justify-between mb-5">
-                            <button onClick={homeNavigate}>
+                    <div className="grid-cols-2 flex justify-between mb-4 text-3xl  pt-4 font-bold text-indigo-700">
+                        <div className="grid-cols-2 flex justify-between">
+                            <button className={arrowButtonClasses}
+                                onClick={homeNavigate}>
                                 <ArrowLeft/>
                             </button>
                             <h2 className="mb-5 text-3xl ml-4 font-bold text-indigo-700">
                                 {permissionsForUserText} {userIdObject?.userName}</h2>
                         </div>
                         <div>
-                            <ViewPermissionsModal permissionsAssigned={userPermissionsAssignedObject}
+                            <AddPermissionsModal permissionsAssigned={userPermissionsAssignedObject}
                                                   permissionsNotAssigned={userPermissionsNotAssignedObject}
                                                   userId={userParamId}/>
                         </div>
@@ -89,7 +90,7 @@ const AssignPermission = () => {
                     <div>
                         <div>
                             <div
-                                className="flex grid grid-cols-3 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-2 px-4 text-white font-bold text-md">
+                                className="flex grid grid-cols-3 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-md py-5 px-4 text-white font-bold text-md">
                                 <div>
                                     <span>{codeText}</span>
                                 </div>

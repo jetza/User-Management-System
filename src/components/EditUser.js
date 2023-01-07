@@ -1,9 +1,10 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {getUsersData, updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
 import {
-    inputClasses,
+    arrowButtonClasses,
+    inputClasses, labelClasses,
     saveDisabledFormButtonClasses,
     saveFormButtonClasses
 } from "../constants/cssClasses.js";
@@ -64,18 +65,17 @@ const EditUser = () => {
     }
 
     return (
-
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-1 rounded-md">
-                <div className="flex items-center space-x-2 items-baseline ml-4">
+                <div className="flex items-center space-x-2 items-baseline pt-7 ml-4">
                     <button
-                        className="text-violet-700 font-bold justify-center pb-3 mr-3"
+                        className={arrowButtonClasses}
                         type="button"
                         onClick={homeNavigate}
                     >
                         <ArrowLeft/>
                     </button>
-                    <h1 className="text-3xl font-semi-bold text-indigo-700 ml-10">
+                    <h1 className="text-3xl font-bold text-indigo-700 ml-10">
                         {editUserText}
                     </h1>
                 </div>
@@ -83,7 +83,7 @@ const EditUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {firstNameText}
                         </label>
@@ -97,7 +97,7 @@ const EditUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {lastNameText}
                         </label>
@@ -111,7 +111,7 @@ const EditUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {emailText}
                         </label>
@@ -125,7 +125,7 @@ const EditUser = () => {
                     <div className="mb-2">
                         <label
                             htmlFor="email"
-                            className="block text-sm font-semibold text-gray-800"
+                            className={labelClasses}
                         >
                             {statusText} {statusName === "" ? (<span className="text-red-500">[Enter 1 or 0]</span>) :
                             <span></span>}
