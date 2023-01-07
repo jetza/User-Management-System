@@ -13,19 +13,23 @@ const usersDataSlice = createSlice({
         },
         deleteUser(state, action) {
             const userId = action.payload;
-            state.usersData = state.usersData.filter((user) =>
+            state.usersData = state.usersData.filter(user =>
                 user.id !== userId);
             //vraca novi niz svih elemenata koji nisu jednaki objektu tog userId
         },
         updateUser(state, action) {
             const userId = action.payload;
-            //console.log("id", userId)
             const updatedUser = state.usersData.find(user => user.id === userId);
             state.usersData = state.usersData.map(user => user.id !== userId ? user : updatedUser);
+            //state.copyUsersData = JSON.parse(JSON.stringify(state.usersData));
             //vraca novi niz sa izmenjenim objektom gde je id objekta iz usersData jednak userId
         },
-        createUser(state, action) {
-            state.usersData = action.payload;
+        createUser(state = initialUsersState, action) {
+            return {
+                //drugi nacin
+                ...state,
+                usersData: action.payload
+            }
         }
     }
 });

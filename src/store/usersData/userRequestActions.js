@@ -1,4 +1,4 @@
-import {USERS_FETCH_ERROR, DELETE_USER_ERROR, UPDATE_USER_ERROR} from "../../constants/apiMessages";
+import {USERS_FETCH_ERROR, DELETE_USER_ERROR, UPDATE_USER_ERROR, CREATE_USER_ERROR} from "../../constants/apiMessages";
 import {usersDataActions} from "./index";
 import {uiActions} from "../ui";
 
@@ -98,11 +98,13 @@ export const createUserData = (createdUser) => {
                 body: JSON.stringify(createdUser)
 
             });
-            console.log("create user response", response)
-            if (!response.ok || response.status !== 200) {
-                throw new Error(`${UPDATE_USER_ERROR}`);
+            if (!response.ok || response.status !== 200 ) {
+                throw new Error(`${CREATE_USER_ERROR}`);
             }
+
+            //TODO: creates user but throw an error
             const createdUserData = await response.json();
+            console.log(createdUserData)
             dispatch(usersDataActions.createUser(createdUserData));
         };
         try {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {createUserData} from "../store/usersData/userRequestActions";
+import {createUserData, getUsersData} from "../store/usersData/userRequestActions";
 import {
     inputClasses,
     saveDisabledFormButtonClasses,
@@ -45,8 +45,8 @@ const CreateUser = () => {
             status: status === "Active"
         };
         dispatch(createUserData(createdUser));
+        dispatch(getUsersData());//solved bug for not rendering page
         navigate(`../`);
-        document.location.reload();
     }
 
     function statusSave(e) {

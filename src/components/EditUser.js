@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {updateUserData} from "../store/usersData/userRequestActions.js"
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {getUsersData, updateUserData} from "../store/usersData/userRequestActions.js"
 import {useNavigate} from "react-router-dom";
 import {
     inputClasses,
@@ -19,10 +19,9 @@ import {ArrowLeft} from "../constants/svgIcons";
 
 const EditUser = () => {
     //TODO VALIDATION OF ALL EMPTY FIELDS AND REGEX EMAIL
-    //TODO FIX USESTATE UPDATING AFTER 2. RENDER
     let navigate = useNavigate();
     const dispatch = useDispatch();
-    const state = useSelector(state => state?.usersData);
+    const state = useSelector(state => state?.usersData, shallowEqual);
 
     const queryParams = new URLSearchParams(window.location.search);
     const userParamId = parseInt(queryParams.get(`id`));
@@ -36,7 +35,6 @@ const EditUser = () => {
     const [email, setEmail] = useState(userIdObject.email);
     const [statusName, setStatusName] = useState(displayStatus);
     const [status, setStatus] = useState(false);
-    const [user, setUser] = useState("");
 
 
     const homeNavigate = () => {
@@ -50,11 +48,9 @@ const EditUser = () => {
                 email: email,
                 status: status
             };
-        setUser(updatedUser);
         dispatch(updateUserData(updatedUser, id));
+        dispatch(getUsersData());//solved bug for not rendering page
         navigate("../");
-        //
-        // document.location.reload();
     }
     const statusEdit = (e) => {
         if (e.target.value === "1") {
@@ -66,11 +62,6 @@ const EditUser = () => {
         } else
             setStatusName("");
     }
-
-    useLayoutEffect(() => {
-        console.log(user)
-    }, [user]);
-
 
     return (
 

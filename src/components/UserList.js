@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {getUsersData} from "../store/usersData/userRequestActions";
-import {useDispatch, useSelector} from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import DeleteModal from "./DeleteModal";
-import {usersDataActions} from "../store/usersData";
+import usersData, {usersDataActions} from "../store/usersData";
 import {
     pagingArrowsClasses,
     pagingArrowsDisabledClasses,
@@ -44,7 +44,7 @@ const UserList = () => {
     ];
 
     //user edit, assign, sort
-    const state = useSelector(state => state?.usersData);
+    const state = useSelector(state => state?.usersData, shallowEqual);
     const [id, setId] = useState(null);
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -55,7 +55,13 @@ const UserList = () => {
     }
     useEffect(() => {
         dispatch(getUsersData());
-    }, [dispatch, id]);
+    }, [dispatch]);
+
+// ! solved bug for not rendering page
+    useLayoutEffect(() => {
+            dispatch(getUsersData());
+    }, [dispatch]);
+
 
     const assignPermissionNavigate = (userId) => {
         navigate(`../assign-permissions?id=` + userId);
