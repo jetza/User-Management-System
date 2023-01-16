@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {createUserData, getUsersData} from "../store/usersData/userRequestActions";
@@ -30,28 +30,29 @@ const CreateUser = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState(null);
+    const [isButtonDisable, setIsButtonDisable] = useState(true);
 
-    function homeNavigate() {
+    const homeNavigate = () => {
         navigate(-1);
     }
 
-    function saveCreatedUser() {
+    const saveCreatedUser = () => {
 
         const createdUser = {
-            firstName: firstName,
-            lastName: lastName,
-            userName: userName,
-            password: password,
-            email: email,
-            status: status === "Active"
+            firstName,
+            lastName,
+            userName,
+            password,
+            email,
+            status: (status === "Active")
         };
         dispatch(createUserData(createdUser));
         dispatch(getUsersData());//solved bug for not rendering page
         navigate(`../`);
     }
 
-    function statusSave(e) {
+    const statusSave = e => {
         if (e.target.value === "1")
             setStatus("Active");
         else if (e.target.value === "0")
@@ -59,6 +60,14 @@ const CreateUser = () => {
         else
             setStatus("");
     }
+
+    useEffect(() => {
+        console.log(firstName !== "" && lastName !== "" && userName !== "" && password !== "" && email !== "" && status !== null)
+        if (firstName !== "" && lastName !== "" && email !== "" && status !== null){
+            setIsButtonDisable(false);
+        }
+    }, [firstName, lastName, userName, password, email, status]);
+
 
     return (
         <div className="p-4 bg-gray-50">
@@ -163,8 +172,8 @@ const CreateUser = () => {
                     </div>
                     <div className="mt-6">
                         <button
-                            className={status === "" ? saveDisabledFormButtonClasses : saveFormButtonClasses}
-                            disabled={status === ""}
+                            className={isButtonDisable ? saveDisabledFormButtonClasses : saveFormButtonClasses}
+                            disabled={isButtonDisable}
                             type="submit"
                             onClick={saveCreatedUser}>
                             {saveText}

@@ -53,7 +53,7 @@ const EditUser = () => {
         dispatch(getUsersData());//solved bug for not rendering page
         navigate("../");
     }
-    const statusEdit = (e) => {
+    const statusEdit = e => {
         if (e.target.value === "1") {
             setStatus(true);
             setStatusName("Active");
