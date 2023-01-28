@@ -7,6 +7,40 @@ import {uiActions} from "../ui";
 
 export const getUserPermissionsData = id => {
 
+
+    //TODO: FINISH NOTIFICATIONS
+    // const getNotification = (status) => {
+    //     let statusMessage = () => {
+    //         let message;
+    //         switch(status) {
+    //             case "success":
+    //                 message = "Role edited successfully!"
+    //                 break;
+    //             case "error":
+    //                 message = `There is a problem editing role *${roleObject.name}*!`
+    //                 break;
+    //             case "network error":
+    //                 message = "Check your internet connection!"
+    //                 break;
+    //             case "duplication error":
+    //                 message = `Role name *${roleObject.name}* already exists!`
+    //                 break;
+    //             default:
+    //                 message = `There is a problem editing role ${roleObject.name}!`
+    //         }
+    //         return message;
+    //     }
+    //     const notification = {
+    //         isVisible: true,
+    //         type: status && status === "success" ? "success" : "error",
+    //         hasError: status && status !== "success",
+    //         message: statusMessage()
+    //     };
+    //     dispatch(uiActions.showNotification(notification));
+    // };
+
+
+
     return async dispatch => {
         const fetchUserPermissionsData = async () => {
             dispatch(uiActions.setIsLoading(true));

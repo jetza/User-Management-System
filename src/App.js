@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 
 function App() {
 
-    const isLoading = useSelector((state) => state.ui.isLoading);
+    const isLoading = useSelector((state) => state?.ui?.isLoading);
     return (
         <Router>
             {isLoading && <Spinner/>}

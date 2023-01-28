@@ -57,7 +57,7 @@ const UserList = () => {
 
 // ! solved bug for not rendering page
     useLayoutEffect(() => {
-            dispatch(getUsersData());
+        dispatch(getUsersData());
     }, [dispatch]);
 
 
@@ -96,55 +96,101 @@ const UserList = () => {
         (number+1 > pageNumber.length)? setDisableRButton(true): setDisableRButton(false);
         (number < pageNumber.length)? setDisableLButton(true): setDisableLButton(false);
     }, [number, pageNumber.length]);
-
-    console.log(number)
     //end pagination
 
-    //ordering
-    //TODO DON'T LIKE THIS!!!
+    const ordering = (key, order = 'asc') => {
+        return function innerSort(a, b) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                // property doesn't exist on either object
+                return 0;
+            }
+            const varA = (typeof a[key] === 'string')? a[key].toUpperCase() : a[key];
+            const varB = (typeof b[key] === 'string')? b[key].toUpperCase() : b[key];
+
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return (
+                (order === 'desc') ? (comparison * -1) : comparison
+            );
+        };
+    }
+
+    let arrayForSort = [...state.usersData];
+
     const orderAscending = (asc) => {
         let sortedAsc = [];
         switch(asc) {
             case (1):
-                sortedAsc = state.usersData.slice(0).sort((a,b) => a?.firstName > a.firstName? 1: (a.firstName < b.firstName? -1: 0));
+                sortedAsc = arrayForSort.sort(ordering('firstName'));
                 break;
             case (2):
-                sortedAsc = state.usersData.slice(0).sort((a,b) => a?.lastName > a.lastName? 1: (a.lastName < b.lastName? -1: 0));
+                sortedAsc = arrayForSort.sort(ordering('lastName'));
                 break;
             case (3):
-                sortedAsc = state.usersData.slice(0).sort((a,b) => a?.userName > a.userName? 1: (a.userName < b.userName? -1: 0));
+                sortedAsc = arrayForSort.sort(ordering('userName'));
                 break;
             case (4):
-                sortedAsc = state.usersData.slice(0).sort((a,b) => a?.email > a.email? 1: (a.email < b.email? -1: 0));
+                sortedAsc = arrayForSort.sort(ordering('email'));
                 break;
             default:
                 sortedAsc = state.usersData
         }
         return dispatch(usersDataActions.setUsersData(sortedAsc));
     }
-
     const orderDescending = (desc) => {
-        let sortedDesc = [];
-        switch(desc) {
-            case (1):
-                sortedDesc = state.usersData.slice(0).sort((a,b) => a?.firstName < a.firstName? 1: (a.firstName > b.firstName? -1: 0));
-                break;
-            case (2):
-                sortedDesc = state.usersData.slice(0).sort((a,b) => a?.lastName < a.lastName? 1: (a.lastName > b.lastName? -1: 0));
-                break;
-            case (3):
-                sortedDesc = state.usersData.slice(0).sort((a,b) => a?.userName < a.userName? 1: (a.userName > b.userName? -1: 0));
-                break;
-            case (4):
-                sortedDesc = state.usersData.slice(0).sort((a,b) => a?.email < a.email? 1: (a.email > b.email? -1: 0));
-                break;
-            default:
-                sortedDesc = state.usersData
-        }
-        return dispatch(usersDataActions.setUsersData(sortedDesc));
-    }
-    //end ordering
 
+    }
+
+    //ordering
+    //TODO DON'T LIKE THIS!!!
+
+    // const orderAscending = (asc) => {
+    //     let sortedAsc = [];
+    //     switch(asc) {
+    //         case (1):
+    //             sortedAsc = state.usersData.slice(0).sort((a,b) => a?.firstName > a.firstName? 1: (a.firstName < b.firstName? -1: 0));
+    //             break;
+    //         case (2):
+    //             sortedAsc = state.usersData.slice(0).sort((a,b) => a?.lastName > a.lastName? 1: (a.lastName < b.lastName? -1: 0));
+    //             break;
+    //         case (3):
+    //             sortedAsc = state.usersData.slice(0).sort((a,b) => a?.userName > a.userName? 1: (a.userName < b.userName? -1: 0));
+    //             break;
+    //         case (4):
+    //             sortedAsc = state.usersData.slice(0).sort((a,b) => a?.email > a.email? 1: (a.email < b.email? -1: 0));
+    //             break;
+    //         default:
+    //             sortedAsc = state.usersData
+    //     }
+    //     return dispatch(usersDataActions.setUsersData(sortedAsc));
+    // }
+    //
+    // const orderDescending = (desc) => {
+    //     let sortedDesc = [];
+    //     switch(desc) {
+    //         case (1):
+    //             sortedDesc = state.usersData.slice(0).sort((a,b) => a?.firstName < a.firstName? 1: (a.firstName > b.firstName? -1: 0));
+    //             break;
+    //         case (2):
+    //             sortedDesc = state.usersData.slice(0).sort((a,b) => a?.lastName < a.lastName? 1: (a.lastName > b.lastName? -1: 0));
+    //             break;
+    //         case (3):
+    //             sortedDesc = state.usersData.slice(0).sort((a,b) => a?.userName < a.userName? 1: (a.userName > b.userName? -1: 0));
+    //             break;
+    //         case (4):
+    //             sortedDesc = state.usersData.slice(0).sort((a,b) => a?.email < a.email? 1: (a.email > b.email? -1: 0));
+    //             break;
+    //         default:
+    //             sortedDesc = state.usersData
+    //     }
+    //     return dispatch(usersDataActions.setUsersData(sortedDesc));
+    // }
+    //end ordering
+//TODO: MOVE ORDERING CODE TO SEPARATE COMPONENT
     return (
         <div className="p-4 bg-gray-50">
             <div className="bg-white p-4 rounded-md">
@@ -175,8 +221,8 @@ const UserList = () => {
                                 })}
                                 {textsUserList && textsUserList.map((text) => {
                                     return <div className="grid-cols-2 flex gap-4 justify-between pr-5">
-                                    <span className="pt-3">{text}</span>
-                                </div>})}
+                                        <span className="pt-3">{text}</span>
+                                    </div>})}
                             </div>
                             {currentPost && currentPost.map((user) => {
                                 return <div

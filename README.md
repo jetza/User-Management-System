@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+**User Management System**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application is a user management system built with Create React App and styled with Tailwind CSS.\
+It allows for the viewing, adding, editing, and deleting of users, as well as adding and removing permissions for individual users.  
+Users can be ordered by first name, last name, username, and email, and pagination is also implemented.
 
-## Available Scripts
+This application makes use of the Redux library for state management and React Router for client-side routing.  
+Data is consumed from a minimal API built in Visual Studio using C# and an SQL database.
 
-In the project directory, you can run:
+**Features:**
 
-### `npm start`
+- View user data
+- Add new user
+- Edit existing user
+- Delete user
+- Add or remove permissions for individual users
+- Sort users by first name, last name, username, and email
+- Pagination
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Technologies used:**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Create React App
+- Tailwind CSS
+- Redux
+- React Router
+- Minimal API with Visual Studio (C#)
+- SQL
 
-### `npm test`
+**Getting started**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run this application locally, you will need to have Node.js and npm installed.  
+Once you have those set up, clone this repository and navigate to the project's directory in your terminal. Then, run the following commands:
 
-### `npm run build`
+![](public/Mockups/npm install.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This command will install all the necessary external libraries that the application depends on, including Redux, React Router and other dependencies listed in the package.json file.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![](public/Mockups/npm start.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This command will start the development server.  
+The application will be available at http://localhost:3000.
 
-### `npm run eject`
+Please note that this application expects to consume data from a separate API, so you will need to configure local API endpoint in the separate env file.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+That's it! You're now ready to start managing users with this application.
+   
+ 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Application preview**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Main View
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![](public/Mockups/user management main view.png)
 
-## Learn More
+Create User VIew
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![](public/Mockups/user management create user.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Edit User VIew
 
-### Code Splitting
+![](public/Mockups/user management edit user.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Add Permission VIew
 
-### Analyzing the Bundle Size
+![](public/Mockups/user management add permission.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

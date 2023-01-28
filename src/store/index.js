@@ -1,6 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
-import usersDataSlice from "./usersData";
 import uiSlice from "./ui";
+import usersDataSlice from "./usersData";
+
 import permissionsDataSlice from "./permissionsData";
 import userPermissionsDataSlice from "./userPermissionsData";
 

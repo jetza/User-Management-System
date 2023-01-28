@@ -61,8 +61,8 @@ const CreateUser = () => {
             setStatus("");
     }
 
+    //TODO: create validation variable for if condition
     useEffect(() => {
-        console.log(firstName !== "" && lastName !== "" && userName !== "" && password !== "" && email !== "" && status !== null)
         if (firstName !== "" && lastName !== "" && email !== "" && status !== null){
             setIsButtonDisable(false);
         }
